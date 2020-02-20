@@ -20,7 +20,7 @@ class Repository {
         lateinit var items: List<ItemModel>
     }
 
-    @Xml(name = "item")
+    @Xml
     class ItemModel {
         @PropertyElement
         lateinit var title: String
@@ -64,6 +64,7 @@ class Repository {
                     item.url.substringBefore("?")
                 ))
             }
+
             return newsItems
         }
     }

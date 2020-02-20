@@ -4,8 +4,10 @@ buildscript {
     ext.kotlin_version = '1.3.61'
     ext.nav_version = '2.2.1'
     ext.lifecycle_version = "2.2.0"
-    ext.okhttp_version = "4.4.0"
     ext.retrofit_version = "2.7.1"
+    ext.tikxml_version = "0.8.13"
+    ext.glide_version = "4.11.0"
+
     repositories {
         google()
         jcenter()

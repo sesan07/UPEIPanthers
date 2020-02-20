@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class NewsFragment : Fragment() {
 
@@ -20,10 +22,21 @@ class NewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_news, container, false)
+
+        val layoutManager = LinearLayoutManager(view.context)
+        val newsAdapter = NewsAdapter(view.context)
+
         model.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
             // update UI
+            newsAdapter.updateNewsItems(newsItems)
         })
+
+        val recyclerView = view.findViewById(R.id.news_recycler_view) as RecyclerView
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = newsAdapter
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false)
+        return view
     }
 }
