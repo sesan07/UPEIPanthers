@@ -12,8 +12,8 @@ class NewsViewModel : ViewModel() {
 
     private val newsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
 
-    init {
-        loadNewsItems()
+    fun setUp() {
+        if (newsItems.value!!.isEmpty()) loadNewsItems()
     }
 
     fun getNewsItems(): LiveData<List<NewsItem>> {

@@ -9,10 +9,11 @@ import androidx.fragment.app.activityViewModels
 
 class HomeFragment : Fragment() {
 
-    private val model: NewsViewModel by activityViewModels()
+    private val newsViewModel: NewsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        newsViewModel.setUp()
     }
 
     override fun onCreateView(
