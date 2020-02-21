@@ -25,7 +25,7 @@ class NewsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_news, container, false)
 
         val layoutManager = LinearLayoutManager(view.context)
-        val newsAdapter = NewsAdapter(view.context)
+        val newsAdapter = NewsAdapter()
 
         model.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
             // update UI

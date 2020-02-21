@@ -8,8 +8,15 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.module.AppGlideModule
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 
-class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
+
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
 
     private var newsItems = listOf<NewsItem>()
 
@@ -35,7 +42,7 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
 
         titleTextView.text = newsItems[position].title
         descriptionTextView.text = newsItems[position].description
-        Glide.with(context)
+        GlideApp.with(imageView.context)
             .load(newsItems[position].image_url)
             .placeholder(R.drawable.ic_insert_picture_icon)
             .into(imageView)
@@ -53,4 +60,18 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
 
 
     class NewsItemViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView)
+
+
+}
+
+@GlideModule
+class AppNameGlideModule : AppGlideModule() {
+
+    override fun applyOptions(context: Context, builder: GlideBuilder) {
+        super.applyOptions(context, builder)
+        builder.apply { RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).signature(
+            ObjectKey(System.currentTimeMillis().toShort())
+        ) }
+    }
+
 }

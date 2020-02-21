@@ -15,8 +15,8 @@ private const val TAG = "Repository"
 private const val BASE_URL = "http://gopanthersgo.ca"
 private const val NEWS_URL = "/landing/headlines-featured?feed=rss_2.0"
 private const val FIXTURES_URL = "/composite?print=rss"
+private const val MAX_FIXTURES = 100
 
-private const val DATE_FORMAT_STR = "EEE, dd MMM yyyy HH:mm:ss z"
 
 class Repository {
 
@@ -66,6 +66,12 @@ class Repository {
 
         @PropertyElement
         lateinit var pubDate: String
+
+        @PropertyElement(name = "ps:score")
+        lateinit var score: String
+
+        @PropertyElement(name = "ps:opponent")
+        lateinit var opponent: String
     }
 
     interface WebService {
@@ -112,35 +118,32 @@ class Repository {
 
             val items = webService.getFixtures().items
 
-            for (item in items) {
+            var i = items.size - 1
+            var count = 0
+            while (count < MAX_FIXTURES && i >= 0) {
+                val item = items[i]
                 try {
                     fixtureItems.add(
                         FixtureItem(
                             item.title,
                             item.link,
                             item.description,
-                            when (item.category) {
-                                "Men\'s Basketball" -> FixtureCategory.MEN_BASKETBALL
-                                "Men\'s Soccer" -> FixtureCategory.MEN_SOCCER
-                                "Men\'s Ice Hockey" -> FixtureCategory.MEN_HOCKEY
-                                "Women\'s Basketball" -> FixtureCategory.WOMEN_BASKETBALL
-                                "Women\'s Soccer" -> FixtureCategory.WOMEN_SOCCER
-                                "Women\'s Ice Hockey" -> FixtureCategory.WOMEN_HOCKEY
-                                "Women\'s Rugby" -> FixtureCategory.WOMEN_RUGBY
-                                "Track and Field" -> FixtureCategory.TRACK_FIELD
-                                "Swimming" -> FixtureCategory.SWIMMING
-                                "Cross Country" -> FixtureCategory.CROSS_COUNTRY
-                                else -> throw NoSuchElementException("${item.category} category")
-                            },
-                            SimpleDateFormat(DATE_FORMAT_STR, Locale.ENGLISH).parse(item.pubDate)!!
+                            item.category,
+                            item.pubDate,
+                            item.score,
+                            item.opponent
                         )
                     )
                 } catch (ex: NoSuchElementException) {
-                    Log.e(TAG, ex.toString())
+                    Log.e(TAG, "Unknown category: ${ex.message}")
+                } catch (ex: UninitializedPropertyAccessException) {
+                    Log.e(TAG, "Expected property for FixtureItem is missing: ${ex.message}")
                 } catch (ex: Exception) {
                     Log.e(TAG, ex.toString())
                 }
 
+                count++
+                i--
             }
 
             return fixtureItems
