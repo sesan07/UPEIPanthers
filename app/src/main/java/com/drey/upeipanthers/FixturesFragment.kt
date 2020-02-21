@@ -1,7 +1,6 @@
 package com.drey.upeipanthers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,18 +29,18 @@ class FixturesFragment : Fragment() {
 
         val expandableListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view)
 
-        val categoryEnumValues = FixtureCategory.values()
-        val categoryList = List(categoryEnumValues.size) {
-            categoryEnumValues[it].text
-        }
-
-        val fixtureCategoriesAdapter = FixtureCategoriesAdapter(view.context, "Categories", categoryList)
+        val fixtureCategoriesAdapter =
+            FixtureCategoriesAdapter(view.context, model.currCategory, FixtureCategory.values().toList(), model.getCategorySizes())
         expandableListView.setAdapter(fixtureCategoriesAdapter)
         expandableListView.setOnGroupExpandListener {
 
         }
-        expandableListView.setOnChildClickListener { parent, view, groupPosition, childPosition, id ->
+        expandableListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
+            val selectedCategory = FixtureCategory.values()[childPosition]
 
+            fixtureCategoriesAdapter.setCurrCategory(selectedCategory)
+            model.categoryChanged(selectedCategory)
+            expandableListView.collapseGroup(groupPosition)
             false
         }
 

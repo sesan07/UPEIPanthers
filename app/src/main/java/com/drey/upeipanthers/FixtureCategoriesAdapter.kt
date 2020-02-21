@@ -2,21 +2,25 @@ package com.drey.upeipanthers
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.FrameLayout
 import android.widget.TextView
 
+private const val TAG = "FixtureCatAdapter"
 
 class FixtureCategoriesAdapter(
     private val context: Context,
-    private val categoriesGroup: String,
-    private val categoryItems: List<String>
+    private var currCategory: FixtureCategory,
+    private val categoryItems: List<FixtureCategory>,
+    private var categoryCounts: List<Int>
 ) : BaseExpandableListAdapter() {
 
     override fun getGroup(groupPosition: Int): Any {
-        return categoriesGroup
+        return currCategory
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
@@ -35,7 +39,7 @@ class FixtureCategoriesAdapter(
         }
         val groupTextView = view!!.findViewById<TextView>(R.id.fixture_category_chooser_text_view)
         groupTextView.setTypeface(null, Typeface.BOLD)
-        groupTextView.text = categoriesGroup
+        groupTextView.text = currCategory.text
         return view
     }
 
@@ -59,8 +63,14 @@ class FixtureCategoriesAdapter(
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = layoutInflater.inflate(R.layout.sport_category, null)
         }
-        val expandedListTextView = view!!.findViewById<TextView>(R.id.fixture_category_text_view)
-        expandedListTextView.text = categoryItem
+        view!!.findViewById<TextView>(R.id.fixture_category_text_view).text = categoryItem.text
+        view.findViewById<TextView>(R.id.category_count_view).text = categoryCounts[childPosition].toString()
+
+        if (categoryItem == currCategory)
+            view.findViewById<FrameLayout>(R.id.highlighted_bg).visibility = View.VISIBLE
+        else
+            view.findViewById<FrameLayout>(R.id.highlighted_bg).visibility = View.INVISIBLE
+
         return view
     }
 
@@ -70,5 +80,10 @@ class FixtureCategoriesAdapter(
 
     override fun getGroupCount(): Int {
         return 1
+    }
+
+    fun setCurrCategory(category: FixtureCategory) {
+        currCategory = category
+        notifyDataSetChanged()
     }
 }
