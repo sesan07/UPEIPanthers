@@ -48,7 +48,6 @@ class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsA
         descriptionTextView.text = newsItem.description
         GlideApp.with(imageView.context)
             .load(newsItem.image_url)
-            .placeholder(R.drawable.ic_insert_picture_icon)
             .into(imageView)
 
         cardView.setOnClickListener {

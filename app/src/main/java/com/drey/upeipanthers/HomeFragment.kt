@@ -118,7 +118,6 @@ class HomeFragment : Fragment() {
             descriptionTextView.text = item.description
             GlideApp.with(imageView.context)
                 .load(item.image_url)
-                .placeholder(R.drawable.ic_insert_picture_icon)
                 .into(imageView)
 
             newsViewFlipper.addView(view)
