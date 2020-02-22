@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fixture_card_view"
     android:layout_width="match_parent"
-    android:layout_height="128dp"
+    android:layout_height="100dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:orientation="vertical">
@@ -11,18 +11,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="4dp">
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="2dp">
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 app:srcCompat="@drawable/ic_insert_picture_icon" />
 
             <LinearLayout
@@ -31,32 +33,35 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/month_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
                     android:id="@+id/day_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:gravity="center"
-                    android:text="TextView"
+                    android:gravity="center_horizontal|bottom"
+                    android:text="999"
                     android:textColor="@color/colorAccent"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/month_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal|top"
+                    android:text="SEPT"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/time_text_view"
+                    android:id="@+id/year_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="2020"
+                    android:textSize="18sp" />
+
             </LinearLayout>
         </FrameLayout>
 
@@ -64,15 +69,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:orientation="vertical"
-            android:padding="2dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/home_team_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:gravity="center_horizontal|bottom"
+                android:gravity="bottom"
                 android:text="TextView"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
@@ -82,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:gravity="center_horizontal|top"
+                android:gravity="top"
                 android:text="TextView"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
@@ -93,8 +97,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="More Details"
-                android:textSize="18sp"
+                android:text="MORE DETAILS"
+                android:textSize="14sp"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -105,8 +109,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="2dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/home_score_text_view"
@@ -114,7 +117,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center_horizontal|bottom"
-                android:text="TextView"
+                android:text="9999"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp" />
 
@@ -124,7 +127,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center_horizontal|top"
-                android:text="TextView"
+                android:text="9999"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp" />
 
@@ -134,16 +137,29 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:id="@+id/scoreless_space"
+        <LinearLayout
+            android:id="@+id/scoreless_linear_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="2dp"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/time_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="12:34"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

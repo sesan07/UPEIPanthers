@@ -86,4 +86,9 @@ class FixtureCategoriesAdapter(
         currCategory = category
         notifyDataSetChanged()
     }
+
+    fun updateCategoryCounts(categoryCounts: List<Int>) {
+        this.categoryCounts = categoryCounts
+        notifyDataSetChanged()
+    }
 }

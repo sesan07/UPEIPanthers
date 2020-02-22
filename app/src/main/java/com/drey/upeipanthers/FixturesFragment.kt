@@ -29,12 +29,14 @@ class FixturesFragment : Fragment() {
 
         val expandableListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view)
 
-        val fixtureCategoriesAdapter =
-            FixtureCategoriesAdapter(view.context, model.currCategory, FixtureCategory.values().toList(), model.getCategorySizes())
-        expandableListView.setAdapter(fixtureCategoriesAdapter)
-        expandableListView.setOnGroupExpandListener {
+        val fixtureCategoriesAdapter = FixtureCategoriesAdapter(
+            view.context, model.currCategory,
+            FixtureCategory.values().toList(),
+            model.getCategoryCounts()
+        )
 
-        }
+        expandableListView.setAdapter(fixtureCategoriesAdapter)
+
         expandableListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             val selectedCategory = FixtureCategory.values()[childPosition]
 
@@ -44,13 +46,13 @@ class FixturesFragment : Fragment() {
             false
         }
 
-
         val layoutManager = LinearLayoutManager(view.context)
         val fixturesAdapter = FixturesAdapter()
 
         model.getFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
             // update UI
             fixturesAdapter.updateFixtureItems(fixtureItems)
+            fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())
         })
 
         val recyclerView = view.findViewById(R.id.fixtures_recycler_view) as RecyclerView

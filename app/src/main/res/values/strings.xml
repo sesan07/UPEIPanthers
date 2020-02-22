@@ -6,11 +6,4 @@
     <string name="fixtures">Fixtures</string>
     <string name="home">Home</string>
     <string name="news">News</string>
-
-    <string-array name="sport_categories">
-        <item>Men\'s Basketball</item>
-        <item>Men\'s Hockey</item>
-        <item>Men\'s Soccer</item>
-        <item>Track &amp; Field</item>
-    </string-array>
 </resources>

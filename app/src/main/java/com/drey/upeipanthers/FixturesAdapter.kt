@@ -1,5 +1,7 @@
 package com.drey.upeipanthers
 
+import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 class FixturesAdapter() : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
 
     private var fixtureItems = listOf<FixtureItem>()
+    var count = 0
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FixtureItemViewHolder {
@@ -31,23 +34,47 @@ class FixturesAdapter() : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHo
         val cardView = holder.cardView
         val fixtureItem = fixtureItems[position]
 
+        cardView.findViewById<TextView>(R.id.year_text_view).text = fixtureItem.year
         cardView.findViewById<TextView>(R.id.month_text_view).text = fixtureItem.month
         cardView.findViewById<TextView>(R.id.day_text_view).text = fixtureItem.day
-        cardView.findViewById<TextView>(R.id.time_text_view).text = fixtureItem.time
-        cardView.findViewById<TextView>(R.id.home_team_text_view).text = fixtureItem.homeTeam
-        cardView.findViewById<TextView>(R.id.away_team_text_view).text = fixtureItem.awayTeam
 
-        if (fixtureItems[position].hasScore) {
-            cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.VISIBLE
-            cardView.findViewById<Space>(R.id.scoreless_space).visibility = View.GONE
-
-            cardView.findViewById<TextView>(R.id.home_score_text_view).text = fixtureItem.homeScore
-            cardView.findViewById<TextView>(R.id.away_score_text_view).text = fixtureItem.awayScore
-            cardView.findViewById<TextView>(R.id.comments_text_view).text = fixtureItem.comment
+        val homeTeamTextView = cardView.findViewById<TextView>(R.id.home_team_text_view)
+        val awayTeamTextView = cardView.findViewById<TextView>(R.id.away_team_text_view)
+        homeTeamTextView.text = fixtureItem.homeTeam
+        awayTeamTextView.text = fixtureItem.awayTeam
+        if (fixtureItem.isHomeGame) {
+            homeTeamTextView.setTypeface(null, Typeface.BOLD)
+            awayTeamTextView.setTypeface(null, Typeface.NORMAL)
         }
         else {
-            cardView.findViewById<Space>(R.id.scoreless_space).visibility = View.VISIBLE
+            homeTeamTextView.setTypeface(null, Typeface.NORMAL)
+            awayTeamTextView.setTypeface(null, Typeface.BOLD)
+        }
+
+        if (fixtureItem.hasScore) {
+            cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.VISIBLE
+            cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.GONE
+
+            cardView.findViewById<TextView>(R.id.comments_text_view).text = fixtureItem.comment
+
+            val homeScoreTextView = cardView.findViewById<TextView>(R.id.home_score_text_view)
+            val awayScoreTextView = cardView.findViewById<TextView>(R.id.away_score_text_view)
+            homeScoreTextView.text = fixtureItem.homeScore
+            awayScoreTextView.text = fixtureItem.awayScore
+            if (fixtureItem.isHomeGame) {
+                homeScoreTextView.setTypeface(null, Typeface.BOLD)
+                awayScoreTextView.setTypeface(null, Typeface.NORMAL)
+            }
+            else {
+                homeScoreTextView.setTypeface(null, Typeface.NORMAL)
+                awayScoreTextView.setTypeface(null, Typeface.BOLD)
+            }
+        }
+        else {
+            cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.VISIBLE
             cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.GONE
+
+            cardView.findViewById<TextView>(R.id.time_text_view).text = fixtureItem.time
         }
     }
 

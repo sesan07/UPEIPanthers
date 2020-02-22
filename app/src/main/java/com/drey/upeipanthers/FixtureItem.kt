@@ -35,29 +35,31 @@ private val VICTORY_COMMENTS = listOf(
 
 private const val LOSS_COMMENT = "Meh.."
 
-class FixtureItem(val title: String,
-                       val link: String,
-                       val description: String,
-                       private val categoryStr: String,
-                       private val dateStr: String,
-                       val score: String,
-                       val opponent: String) {
+class FixtureItem(
+    title: String,
+    link: String,
+    description: String,
+    categoryStr: String,
+    dateStr: String,
+    score: String,
+    opponent: String
+) {
 
     var fixtureCategory: FixtureCategory
     var homeTeam = ""
     var awayTeam = ""
     var homeScore = ""
     var awayScore = ""
+    var year = ""
     var month = ""
     var day = ""
     var time = ""
     var comment = ""
+    var isHomeGame = false
     var isVictory = false
     var hasScore = false
 
     init {
-        val date: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
-            .parse(dateStr)!!
 
         fixtureCategory = when (categoryStr) {
             "Men\'s Basketball" -> FixtureCategory.MEN_BASKETBALL
@@ -75,6 +77,7 @@ class FixtureItem(val title: String,
 
         val isAwayGame = opponent.startsWith("at ")
         val isExhibition = opponent.startsWith("vs. ")
+        isHomeGame = !isAwayGame
 
         when {
             isAwayGame -> {
@@ -96,8 +99,6 @@ class FixtureItem(val title: String,
 
             val arr = score.split(", ")
             val arr2 = arr[1].split("-")
-
-//            Log.e(TAG, "${SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH).format(date)} arr[0]: ${arr[0]} arr[1]: ${arr[1]} arr2[0]: ${arr2[0]} arr2[1]: ${arr2[1]}")
 
             if (arr[0] == "W") {
                 isVictory = true
@@ -126,7 +127,10 @@ class FixtureItem(val title: String,
             }
         }
 
+        val date: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+            .parse(dateStr)!!
 
+        year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(date)
         month = SimpleDateFormat("MMM", Locale.ENGLISH).format(date)
         day = SimpleDateFormat("dd", Locale.ENGLISH).format(date)
         time = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date)

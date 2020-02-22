@@ -53,13 +53,13 @@ class FixturesViewModel : ViewModel() {
         currFixtureItems.value = categoryFixtureItems[category]
     }
 
-    fun getCategorySizes(): List<Int> {
-        val sizes = mutableListOf<Int>()
+    fun getCategoryCounts(): List<Int> {
+        val counts = mutableListOf<Int>()
         val fixtures = FixtureCategory.values()
         for (fixture in fixtures) {
-            sizes.add(categoryFixtureItems[fixture]!!.size)
+            counts.add(categoryFixtureItems[fixture]!!.size)
         }
 
-        return sizes
+        return counts
     }
 }
