@@ -49,7 +49,7 @@ class FixturesFragment : Fragment() {
         val layoutManager = LinearLayoutManager(view.context)
         val fixturesAdapter = FixturesAdapter()
 
-        model.getFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
+        model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
             // update UI
             fixturesAdapter.updateFixtureItems(fixtureItems)
             fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())

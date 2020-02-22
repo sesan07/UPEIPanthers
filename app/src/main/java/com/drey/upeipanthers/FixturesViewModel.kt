@@ -15,6 +15,7 @@ class FixturesViewModel : ViewModel() {
         private set
 
     private var categoryFixtureItems = hashMapOf<FixtureCategory, List<FixtureItem>>()
+    private val allFixtureItems = MutableLiveData<List<FixtureItem>>(listOf())
     private val currFixtureItems = MutableLiveData<List<FixtureItem>>(listOf())
 
     fun setUp() {
@@ -29,17 +30,22 @@ class FixturesViewModel : ViewModel() {
     }
 
 
-    fun getFixtureItems(): LiveData<List<FixtureItem>> {
+    fun getCurrFixtureItems(): LiveData<List<FixtureItem>> {
         return currFixtureItems
+    }
+
+    fun getAllFixtureItems(): LiveData<List<FixtureItem>> {
+        return allFixtureItems
     }
 
     private fun loadFixtureItems() {
         // Do an asynchronous operation to fetch newsItems.
         viewModelScope.launch {
-            val allFixtureItems = Repository.getFixtureItems()
+            val allItems = Repository.getFixtureItems()
+            allFixtureItems.value = allItems
 
             for (category in FixtureCategory.values()) {
-                categoryFixtureItems[category] = allFixtureItems.filter {
+                categoryFixtureItems[category] = allItems.filter {
                     it.fixtureCategory == category
                 }
             }

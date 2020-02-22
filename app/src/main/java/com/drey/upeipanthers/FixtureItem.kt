@@ -1,8 +1,8 @@
 package com.drey.upeipanthers
 
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
@@ -38,11 +38,11 @@ private const val LOSS_COMMENT = "Meh.."
 class FixtureItem(
     title: String,
     link: String,
-    description: String,
+    val description: String,
     categoryStr: String,
     dateStr: String,
     score: String,
-    opponent: String
+    opponent1: String
 ) {
 
     var fixtureCategory: FixtureCategory
@@ -58,6 +58,8 @@ class FixtureItem(
     var isHomeGame = false
     var isVictory = false
     var hasScore = false
+    var isImportant = false
+    var opponent = ""
 
     init {
 
@@ -75,22 +77,25 @@ class FixtureItem(
             else -> throw NoSuchElementException(categoryStr)
         }
 
-        val isAwayGame = opponent.startsWith("at ")
-        val isExhibition = opponent.startsWith("vs. ")
+        val isAwayGame = opponent1.startsWith("at ")
+        val isExhibition = opponent1.startsWith("vs. ")
         isHomeGame = !isAwayGame
 
         when {
             isAwayGame -> {
-                homeTeam = opponent.substringAfter("at ")
+                homeTeam = opponent1.substringAfter("at ")
                 awayTeam = TEAM_NAME
+                opponent = homeTeam
             }
             isExhibition -> {
                 homeTeam = TEAM_NAME
-                awayTeam = opponent.substringAfter("vs. ")
+                awayTeam = opponent1.substringAfter("vs. ")
+                opponent = awayTeam
             }
             else -> {
                 homeTeam = TEAM_NAME
-                awayTeam = opponent
+                awayTeam = opponent1
+                opponent = opponent1
             }
         }
 
@@ -127,8 +132,13 @@ class FixtureItem(
             }
         }
 
+        val today = Date()
         val date: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
             .parse(dateStr)!!
+
+        val diff = date.time - today.time
+        val daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+        isImportant = daysDiff >= 0
 
         year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(date)
         month = SimpleDateFormat("MMM", Locale.ENGLISH).format(date)

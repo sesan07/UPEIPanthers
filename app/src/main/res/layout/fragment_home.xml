@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_layout"
@@ -11,66 +11,51 @@
 
     <ImageView
         android:id="@+id/upei_logo_image_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_weight="20"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_upei_panthers_logo"
-        app:layout_constraintBottom_toTopOf="@+id/fixtures_card_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_upei_panthers_logo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/fixtures_card_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/news_card_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upei_logo_image_view">
+        android:layout_weight="40">
 
 
-        <ImageView
-            android:id="@+id/imageView3"
+        <ViewFlipper
+            android:id="@+id/fixtures_view_flipper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_insert_picture_icon" />
+            android:layout_height="match_parent" />
 
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/news_card_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@id/tickets_card_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fixtures_card_view">
+        android:layout_weight="40">
 
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <ViewFlipper
+            android:id="@+id/news_view_flipper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_insert_picture_icon" />
+            android:layout_height="match_parent" />
 
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/tickets_card_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/news_card_view">
+        android:layout_marginBottom="8dp">
 
 
         <Button
@@ -82,4 +67,4 @@
 
 
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
