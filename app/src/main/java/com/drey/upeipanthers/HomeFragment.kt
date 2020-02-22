@@ -53,19 +53,19 @@ class HomeFragment : Fragment() {
 
         fixturesViewFlipper = view.findViewById(R.id.fixtures_view_flipper)
         fixturesViewModel.getAllFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
-            populatateImportantFixtures(fixtureItems)
+            populateImportantFixtures(fixtureItems)
         })
 
         newsViewFlipper = view.findViewById(R.id.news_view_flipper)
         newsViewModel.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
             // update UI
-            populatateImportantNews(newsItems)
+            populateImportantNews(newsItems)
         })
 
         return view
     }
 
-    private fun populatateImportantFixtures(fixtureItems: List<FixtureItem>) {
+    private fun populateImportantFixtures(fixtureItems: List<FixtureItem>) {
         Log.e(TAG, "populatateImportantFixtures")
 
         val importantFixtureItems = mutableListOf<FixtureItem>()
@@ -103,8 +103,7 @@ class HomeFragment : Fragment() {
         fixturesViewFlipper.startFlipping()
     }
 
-    private fun populatateImportantNews(newsItems: List<NewsItem>) {
-        Log.e(TAG, "populatateImportantNews")
+    private fun populateImportantNews(newsItems: List<NewsItem>) {
 
         for (item in newsItems) {
             val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

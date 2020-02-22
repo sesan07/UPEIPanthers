@@ -44,7 +44,7 @@ private const val LOSS_COMMENT = "Meh.."
 
 class FixtureItem(
     title: String,
-    link: String,
+    val link: String,
     val description: String,
     categoryStr: String,
     dateStr: String,

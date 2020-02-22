@@ -9,9 +9,10 @@ import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
-class FixturesAdapter() : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
+class FixturesAdapter(val navController: NavController) : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
 
     private var fixtureItems = listOf<FixtureItem>()
 
@@ -74,6 +75,11 @@ class FixturesAdapter() : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHo
             cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.GONE
 
             cardView.findViewById<TextView>(R.id.time_text_view).text = fixtureItem.time
+        }
+
+        cardView.setOnClickListener {
+            val action = NewsFragmentDirections.openWebView(fixtureItem.link)
+            navController.navigate(action)
         }
     }
 
