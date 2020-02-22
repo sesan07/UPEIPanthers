@@ -1,13 +1,14 @@
 package com.drey.upeipanthers
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,8 +16,9 @@ import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 
+private const val TAG = "NewsAdapter"
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
+class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
 
     private var newsItems = listOf<NewsItem>()
 
@@ -40,12 +42,19 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
         val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
         val descriptionTextView = cardView.findViewById<TextView>(R.id.description_text_view)
 
-        titleTextView.text = newsItems[position].title
-        descriptionTextView.text = newsItems[position].description
+        val newsItem = newsItems[position]
+
+        titleTextView.text = newsItem.title
+        descriptionTextView.text = newsItem.description
         GlideApp.with(imageView.context)
-            .load(newsItems[position].image_url)
+            .load(newsItem.image_url)
             .placeholder(R.drawable.ic_insert_picture_icon)
             .into(imageView)
+
+        cardView.setOnClickListener {
+            val action = NewsFragmentDirections.openWebView(newsItem.link)
+            navController.navigate(action)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

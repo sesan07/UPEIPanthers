@@ -10,15 +10,35 @@
         android:name="com.drey.upeipanthers.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/open_web_view"
+            app:destination="@id/web_view_dest" />
     </fragment>
     <fragment
         android:id="@+id/fixtures_dest"
         android:name="com.drey.upeipanthers.FixturesFragment"
         android:label="fragment_fixtures"
-        tools:layout="@layout/fragment_fixtures" />
+        tools:layout="@layout/fragment_fixtures" >
+        <action
+            android:id="@+id/open_web_view"
+            app:destination="@id/web_view_dest" />
+    </fragment>
     <fragment
         android:id="@+id/news_dest"
         android:name="com.drey.upeipanthers.NewsFragment"
         android:label="fragment_news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/open_web_view"
+            app:destination="@+id/web_view_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/web_view_dest"
+        android:name="com.drey.upeipanthers.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" >
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </fragment>
 </navigation>
