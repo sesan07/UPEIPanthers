@@ -118,6 +118,7 @@ class HomeFragment : Fragment() {
             descriptionTextView.text = item.description
             GlideApp.with(imageView.context)
                 .load(item.image_url)
+                .dontTransform()
                 .into(imageView)
 
             newsViewFlipper.addView(view)

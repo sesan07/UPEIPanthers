@@ -1,6 +1,5 @@
 package com.drey.upeipanthers
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,12 +8,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.GlideBuilder
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.module.AppGlideModule
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
 
 private const val TAG = "NewsAdapter"
 
@@ -48,6 +41,7 @@ class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsA
         descriptionTextView.text = newsItem.description
         GlideApp.with(imageView.context)
             .load(newsItem.image_url)
+            .dontTransform()
             .into(imageView)
 
         cardView.setOnClickListener {
@@ -66,20 +60,5 @@ class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsA
         notifyDataSetChanged()
     }
 
-
     class NewsItemViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView)
-
-
-}
-
-@GlideModule
-class AppNameGlideModule : AppGlideModule() {
-
-    override fun applyOptions(context: Context, builder: GlideBuilder) {
-        super.applyOptions(context, builder)
-        builder.apply { RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).signature(
-            ObjectKey(System.currentTimeMillis().toShort())
-        ) }
-    }
-
 }
