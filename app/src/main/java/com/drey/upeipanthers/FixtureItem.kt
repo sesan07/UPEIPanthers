@@ -49,7 +49,7 @@ class FixtureItem(
     categoryStr: String,
     dateStr: String,
     score: String,
-    opponent1: String
+    private var opponent1: String
 ) {
 
     var fixtureCategory: FixtureCategory
@@ -90,6 +90,8 @@ class FixtureItem(
         val isExhibition = opponent1.startsWith("vs. ")
         isHomeGame = !isAwayGame
 
+        if (opponent1.contains(" @"))
+            opponent1 = opponent1.substringBefore(" @")
         when {
             isAwayGame -> {
                 homeTeam = opponent1.substringAfter("at ")
