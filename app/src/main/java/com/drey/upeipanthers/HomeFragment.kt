@@ -80,14 +80,18 @@ class HomeFragment : Fragment() {
             val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = layoutInflater.inflate(R.layout.home_fixture_item, null)
 
+            val dateContextView = view.findViewById<TextView>(R.id.home_date_context_text_view)
+            val dateView = view.findViewById<TextView>(R.id.home_date_text_view)
             val categoryView = view.findViewById<TextView>(R.id.home_fixture_category_text_view)
             val opponentView = view.findViewById<TextView>(R.id.home_opponent_text_view)
-            val descriptionView = view.findViewById<TextView>(R.id.home_fixture_desc_text_view)
+//            val descriptionView = view.findViewById<TextView>(R.id.home_fixture_desc_text_view)
             val imageView = view.findViewById<ImageView>(R.id.home_fixture_image_view)
 
+            dateContextView.text = item.dateContext.name
+            dateView.text = item.date
             categoryView.text = item.fixtureCategory.text
             opponentView.text = item.opponent
-            descriptionView.text = item.description
+//            descriptionView.text = item.description
             imageView.setImageResource(fixtureCategoryImages[item.fixtureCategory]!!)
 
             fixturesViewFlipper.addView(view)

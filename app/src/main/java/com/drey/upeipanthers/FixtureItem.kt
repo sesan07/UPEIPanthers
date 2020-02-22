@@ -23,6 +23,13 @@ enum class FixtureCategory(val text: String) {
     CROSS_COUNTRY("Cross Country")
 }
 
+enum class DateContext {
+    TODAY,
+    TOMORROW,
+    UPCOMING,
+    PAST
+}
+
 private val VICTORY_COMMENTS = listOf(
     "EZ WIN",
     "Too easy",
@@ -53,12 +60,14 @@ class FixtureItem(
     var year = ""
     var month = ""
     var day = ""
+    var date = ""
     var time = ""
     var comment = ""
     var isHomeGame = false
     var isVictory = false
     var hasScore = false
     var isImportant = false
+    var dateContext = DateContext.PAST
     var opponent = ""
 
     init {
@@ -132,18 +141,28 @@ class FixtureItem(
             }
         }
 
-        val today = Date()
-        val date: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+        val now = Date()
+        val date1: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
             .parse(dateStr)!!
 
-        val diff = date.time - today.time
-        val daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
-        isImportant = daysDiff >= 0
+        if (date1 > now) {
+            isImportant = true
 
-        year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(date)
-        month = SimpleDateFormat("MMM", Locale.ENGLISH).format(date)
-        day = SimpleDateFormat("dd", Locale.ENGLISH).format(date)
-        time = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date)
+            val diff = date1.time - now.time
+            val daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt()
+            dateContext = when {
+                daysDiff == 0 -> DateContext.TODAY
+                daysDiff == 1 -> DateContext.TOMORROW
+                daysDiff > 1 -> DateContext.UPCOMING
+                else -> DateContext.PAST
+            }
+        }
+
+        year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(date1)
+        month = SimpleDateFormat("MMM", Locale.ENGLISH).format(date1)
+        day = SimpleDateFormat("dd", Locale.ENGLISH).format(date1)
+        date = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date1)
+        time = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date1)
     }
 
 }
