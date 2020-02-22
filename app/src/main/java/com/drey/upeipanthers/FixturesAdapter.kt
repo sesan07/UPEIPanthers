@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 class FixturesAdapter() : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
 
     private var fixtureItems = listOf<FixtureItem>()
-    var count = 0
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FixtureItemViewHolder {
