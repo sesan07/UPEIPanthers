@@ -30,11 +30,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/category_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
+            android:padding="4dp"
+            android:tint="@color/colorAccent"
             app:srcCompat="@drawable/temp_image" />
 
         <TextView
@@ -58,6 +60,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:foreground="@color/colorPrimary"
                 app:srcCompat="@drawable/temp_image" />
 
             <TextView
@@ -66,7 +69,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="999"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorTextDark"
                 android:textSize="18sp" />
         </FrameLayout>
     </LinearLayout>
