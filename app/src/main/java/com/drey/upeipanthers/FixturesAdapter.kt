@@ -51,30 +51,38 @@ class FixturesAdapter(val navController: NavController) : RecyclerView.Adapter<F
             awayTeamTextView.setTypeface(null, Typeface.BOLD)
         }
 
-        if (fixtureItem.hasScore) {
-            cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.VISIBLE
-            cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.GONE
+        when {
+            fixtureItem.canHaveScore and fixtureItem.hasScore -> {
+                cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.VISIBLE
+                cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.GONE
 
-            cardView.findViewById<TextView>(R.id.comments_text_view).text = fixtureItem.comment
+                cardView.findViewById<TextView>(R.id.comments_text_view).text = fixtureItem.comment
 
-            val homeScoreTextView = cardView.findViewById<TextView>(R.id.home_score_text_view)
-            val awayScoreTextView = cardView.findViewById<TextView>(R.id.away_score_text_view)
-            homeScoreTextView.text = fixtureItem.homeScore
-            awayScoreTextView.text = fixtureItem.awayScore
-            if (fixtureItem.isHomeGame) {
-                homeScoreTextView.setTypeface(null, Typeface.BOLD)
-                awayScoreTextView.setTypeface(null, Typeface.NORMAL)
+                val homeScoreTextView = cardView.findViewById<TextView>(R.id.home_score_text_view)
+                val awayScoreTextView = cardView.findViewById<TextView>(R.id.away_score_text_view)
+                homeScoreTextView.text = fixtureItem.homeScore
+                awayScoreTextView.text = fixtureItem.awayScore
+                if (fixtureItem.isHomeGame) {
+                    homeScoreTextView.setTypeface(null, Typeface.BOLD)
+                    awayScoreTextView.setTypeface(null, Typeface.NORMAL)
+                }
+                else {
+                    homeScoreTextView.setTypeface(null, Typeface.NORMAL)
+                    awayScoreTextView.setTypeface(null, Typeface.BOLD)
+                }
             }
-            else {
-                homeScoreTextView.setTypeface(null, Typeface.NORMAL)
-                awayScoreTextView.setTypeface(null, Typeface.BOLD)
-            }
-        }
-        else {
-            cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.VISIBLE
-            cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.GONE
 
-            cardView.findViewById<TextView>(R.id.time_text_view).text = fixtureItem.time
+            fixtureItem.canHaveScore and !fixtureItem.hasScore -> {
+                cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.VISIBLE
+                cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.GONE
+
+                cardView.findViewById<TextView>(R.id.time_text_view).text = fixtureItem.time
+            }
+
+            else -> {
+                cardView.findViewById<LinearLayout>(R.id.scoreless_linear_layout).visibility = View.GONE
+                cardView.findViewById<LinearLayout>(R.id.score_linear_layout).visibility = View.GONE
+            }
         }
 
         cardView.setOnClickListener {

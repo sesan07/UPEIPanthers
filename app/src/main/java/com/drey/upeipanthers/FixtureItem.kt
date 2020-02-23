@@ -17,7 +17,7 @@ enum class FixtureCategory(val text: String) {
     WOMEN_BASKETBALL("Women\'s Basketball"),
     WOMEN_SOCCER("Women\'s Soccer"),
     WOMEN_HOCKEY("Women\'s Ice Hockey"),
-    WOMEN_RUGBY("Women\'s Rugby"),
+    WOMEN_RUGBY("Women\'s Rugby"),              // No scores after this
     TRACK_FIELD("Track & Field"),
     SWIMMING("Swimming"),
     CROSS_COUNTRY("Cross Country")
@@ -66,6 +66,7 @@ class FixtureItem(
     var isHomeGame = false
     var isVictory = false
     var hasScore = false
+    var canHaveScore = false
     var isImportant = false
     var dateContext = DateContext.PAST
     var opponent = ""
@@ -110,6 +111,7 @@ class FixtureItem(
             }
         }
 
+        canHaveScore = fixtureCategory.ordinal <= FixtureCategory.WOMEN_RUGBY.ordinal
         if (score.isNotEmpty()) {
             hasScore = true
 
