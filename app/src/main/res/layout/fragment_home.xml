@@ -23,8 +23,11 @@
         android:id="@+id/fixtures_card_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_weight="40">
+        android:layout_weight="40"
+        app:cardCornerRadius="8dp">
 
 
         <ViewFlipper
@@ -39,8 +42,11 @@
         android:id="@+id/news_card_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_weight="40">
+        android:layout_weight="40"
+        app:cardCornerRadius="8dp">
 
 
         <ViewFlipper
@@ -55,14 +61,20 @@
         android:id="@+id/tickets_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="8dp">
 
 
         <Button
             android:id="@+id/tickets_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:text="Buy Tickets!" />
 
 

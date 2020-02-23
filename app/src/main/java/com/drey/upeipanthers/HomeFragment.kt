@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewFlipper
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
@@ -35,6 +38,7 @@ class HomeFragment : Fragment() {
         FixtureCategory.CROSS_COUNTRY to R.drawable.rugby_women
     )
 
+    private lateinit var navController: NavController
     private lateinit var fixturesViewFlipper: ViewFlipper
     private lateinit var newsViewFlipper: ViewFlipper
 
@@ -42,6 +46,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         newsViewModel.setUp()
         fixturesViewModel.setUp()
+        navController = findNavController()
     }
 
     override fun onCreateView(
@@ -107,11 +112,11 @@ class HomeFragment : Fragment() {
 
         for (item in newsItems) {
             val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = layoutInflater.inflate(R.layout.news_item, null)
+            val cardView = layoutInflater.inflate(R.layout.news_item, null) as CardView
 
-            val imageView = view.findViewById<ImageView>(R.id.news_image_view)
-            val titleTextView = view.findViewById<TextView>(R.id.title_text_view)
-            val descriptionTextView = view.findViewById<TextView>(R.id.description_text_view)
+            val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
+            val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
+            val descriptionTextView = cardView.findViewById<TextView>(R.id.description_text_view)
 
             titleTextView.text = item.title
             descriptionTextView.text = item.description
@@ -120,7 +125,12 @@ class HomeFragment : Fragment() {
                 .dontTransform()
                 .into(imageView)
 
-            newsViewFlipper.addView(view)
+            cardView.setOnClickListener {
+                val action = HomeFragmentDirections.openWebView(item.link)
+                navController.navigate(action)
+            }
+
+            newsViewFlipper.addView(cardView)
 
         }
         newsViewFlipper.flipInterval = NEWS_FLIP_INTERVAL

@@ -78,7 +78,7 @@ class FixturesAdapter(val navController: NavController) : RecyclerView.Adapter<F
         }
 
         cardView.setOnClickListener {
-            val action = NewsFragmentDirections.openWebView(fixtureItem.link)
+            val action = FixturesFragmentDirections.openWebView(fixtureItem.link)
             navController.navigate(action)
         }
     }

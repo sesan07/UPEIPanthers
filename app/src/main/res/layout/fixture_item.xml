@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fixture_card_view"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_margin="4dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -78,10 +78,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="bottom|center"
+                android:maxLines="1"
                 android:text="TextView"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/away_team_text_view"
@@ -89,6 +91,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center|top"
+                android:maxLines="1"
                 android:text="TextView"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
@@ -122,7 +125,7 @@
                 android:gravity="center_horizontal|bottom"
                 android:text="9999"
                 android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/away_score_text_view"
@@ -132,7 +135,7 @@
                 android:gravity="center_horizontal|top"
                 android:text="9999"
                 android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/comments_text_view"
@@ -161,8 +164,7 @@
                 android:gravity="center"
                 android:text="12:34"
                 android:textColor="@color/colorAccent"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="24sp" />
         </LinearLayout>
 
     </LinearLayout>
