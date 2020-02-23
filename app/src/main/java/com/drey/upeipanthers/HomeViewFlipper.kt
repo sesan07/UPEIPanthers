@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 
 class HomeViewFlipper(context: Context, attrs: AttributeSet) : ViewFlipper(context, attrs) {
 
-    val paint = Paint()
+    private val paint = Paint()
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
