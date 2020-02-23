@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
 private const val NEWS_FLIP_INTERVAL = 8000
+private const val MAX_NEWS_ITEMS = 5
 private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzN2Ke1ZG5ttp8ij9vhNwLT87yYH3LNwR9d6LhLuarZmLWYMiJx/exec"
 
 class HomeFragment : Fragment() {
@@ -120,7 +121,12 @@ class HomeFragment : Fragment() {
 
     private fun populateImportantNews(newsItems: List<NewsItem>) {
 
-        for (item in newsItems) {
+
+
+        var i = 0
+        while (i < newsItems.size && i < MAX_NEWS_ITEMS) {
+            val item = newsItems[i]
+
             val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val cardView = layoutInflater.inflate(R.layout.news_item, null) as CardView
 
@@ -140,6 +146,7 @@ class HomeFragment : Fragment() {
 
             newsViewFlipper.addView(cardView)
 
+            i++
         }
         newsViewFlipper.flipInterval = NEWS_FLIP_INTERVAL
         newsViewFlipper.setInAnimation(activity!!, R.anim.slide_in_right)
