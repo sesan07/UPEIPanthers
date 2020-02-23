@@ -136,6 +136,7 @@ class HomeFragment : Fragment() {
             titleTextView.text = item.title
             GlideApp.with(imageView.context)
                 .load(item.image_url)
+                .placeholder(R.drawable.temp_image)
                 .dontTransform()
                 .into(imageView)
 

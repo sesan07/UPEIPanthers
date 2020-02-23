@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_insert_picture_icon" />
+            app:srcCompat="@drawable/temp_image" />
 
         <TextView
             android:id="@+id/fixture_category_text_view"
@@ -57,7 +57,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_insert_picture_icon" />
+                app:srcCompat="@drawable/temp_image" />
 
             <TextView
                 android:id="@+id/category_count_view"
