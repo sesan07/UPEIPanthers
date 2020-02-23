@@ -1,6 +1,8 @@
 package com.drey.upeipanthers
 
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
-class FixturesAdapter(val navController: NavController) : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
+class FixturesAdapter : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
 
     private var fixtureItems = listOf<FixtureItem>()
 
@@ -86,8 +90,13 @@ class FixturesAdapter(val navController: NavController) : RecyclerView.Adapter<F
         }
 
         cardView.setOnClickListener {
-            val action = FixturesFragmentDirections.openWebView(fixtureItem.link)
-            navController.navigate(action)
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(ContextCompat.getColor(cardView.context, R.color.colorPrimary))
+            val intent = builder.build()
+            if (fixtureItem.useBoxScore)
+                intent.launchUrl(cardView.context, Uri.parse(fixtureItem.boxScoreLink))
+            else
+                intent.launchUrl(cardView.context, Uri.parse(fixtureItem.link))
         }
     }
 

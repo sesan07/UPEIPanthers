@@ -1,7 +1,6 @@
 package com.drey.upeipanthers
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,13 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.ViewFlipper
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
@@ -43,7 +41,6 @@ class HomeFragment : Fragment() {
         FixtureCategory.CROSS_COUNTRY to R.drawable.rugby_women
     )
 
-    private lateinit var navController: NavController
     private lateinit var fixturesViewFlipper: HomeViewFlipper
     private lateinit var newsViewFlipper: HomeViewFlipper
 
@@ -51,7 +48,6 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         newsViewModel.setUp()
         fixturesViewModel.setUp()
-        navController = findNavController()
     }
 
     override fun onCreateView(
@@ -73,8 +69,10 @@ class HomeFragment : Fragment() {
         })
 
         view.findViewById<Button>(R.id.tickets_button).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(TICKET_LINK))
-            startActivity(browserIntent)
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            val intent = builder.build()
+            intent.launchUrl(activity!!, Uri.parse(TICKET_LINK))
         }
 
 
@@ -141,8 +139,10 @@ class HomeFragment : Fragment() {
                 .into(imageView)
 
             cardView.setOnClickListener {
-                val action = HomeFragmentDirections.openWebView(item.link)
-                navController.navigate(action)
+                val builder = CustomTabsIntent.Builder()
+                builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                val intent = builder.build()
+                intent.launchUrl(activity!!, Uri.parse(item.link))
             }
 
             newsViewFlipper.addView(cardView)

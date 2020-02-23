@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ExpandableListView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -48,7 +47,7 @@ class FixturesFragment : Fragment() {
         }
 
         val layoutManager = LinearLayoutManager(view.context)
-        val fixturesAdapter = FixturesAdapter(findNavController())
+        val fixturesAdapter = FixturesAdapter()
 
         model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
             // update UI

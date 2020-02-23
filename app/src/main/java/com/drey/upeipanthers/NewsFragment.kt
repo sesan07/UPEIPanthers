@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -26,7 +25,7 @@ class NewsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_news, container, false)
 
         val layoutManager = LinearLayoutManager(view.context)
-        val newsAdapter = NewsAdapter(findNavController())
+        val newsAdapter = NewsAdapter()
 
         model.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
             // update UI

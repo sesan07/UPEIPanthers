@@ -1,17 +1,20 @@
 package com.drey.upeipanthers
 
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "NewsAdapter"
 
-class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
 
     private var newsItems = listOf<NewsItem>()
 
@@ -44,8 +47,10 @@ class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsA
             .into(imageView)
 
         cardView.setOnClickListener {
-            val action = NewsFragmentDirections.openWebView(newsItem.link)
-            navController.navigate(action)
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(ContextCompat.getColor(cardView.context, R.color.colorPrimary))
+            val intent = builder.build()
+            intent.launchUrl(cardView.context, Uri.parse(newsItem.link))
         }
     }
 

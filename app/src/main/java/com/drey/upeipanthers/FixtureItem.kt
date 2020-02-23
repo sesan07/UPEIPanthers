@@ -1,5 +1,6 @@
 package com.drey.upeipanthers
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -16,7 +17,7 @@ enum class FixtureCategory(val text: String) {
     MEN_HOCKEY("Men\'s Ice Hockey"),
     WOMEN_BASKETBALL("Women\'s Basketball"),
     WOMEN_SOCCER("Women\'s Soccer"),
-    WOMEN_HOCKEY("Women\'s Ice Hockey"),
+    WOMEN_HOCKEY("Women\'s Ice Hockey"),        // No boxcore link after this
     WOMEN_RUGBY("Women\'s Rugby"),              // No scores after this
     TRACK_FIELD("Track & Field"),
     SWIMMING("Swimming"),
@@ -69,7 +70,9 @@ class FixtureItem(
     var canHaveScore = false
     var isImportant = false
     var dateContext = DateContext.PAST
-    var opponent = ""
+    val opponent: String
+    val boxScoreLink: String
+    var useBoxScore = false
 
     init {
 
@@ -167,6 +170,13 @@ class FixtureItem(
         day = SimpleDateFormat("dd", Locale.ENGLISH).format(date1)
         date = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date1)
         time = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date1)
+
+        val month1 = SimpleDateFormat("MM", Locale.ENGLISH).format(date1)
+        boxScoreLink = link.substringBeforeLast("/") +
+                "/boxscores/$year$month1${day}_" +
+                link.substringAfter("#").substring(0, 4) +
+                ".xml"
+        useBoxScore = fixtureCategory.ordinal <= FixtureCategory.WOMEN_HOCKEY.ordinal
     }
 
 }
