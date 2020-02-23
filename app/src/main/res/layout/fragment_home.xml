@@ -5,6 +5,7 @@
     android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -26,6 +27,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="40"
+        app:cardBackgroundColor="@color/colorCardBackground"
         app:cardCornerRadius="8dp">
 
 
@@ -45,6 +47,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="40"
+        app:cardBackgroundColor="@color/colorCardBackground"
         app:cardCornerRadius="8dp">
 
 
@@ -63,6 +66,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/colorCardBackground"
         app:cardCornerRadius="8dp">
 
 
@@ -74,7 +78,9 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:text="Buy Tickets!" />
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Buy Tickets!"
+            android:textColor="@color/colorTextDark" />
 
 
     </androidx.cardview.widget.CardView>

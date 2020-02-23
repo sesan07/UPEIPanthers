@@ -5,7 +5,10 @@
     android:id="@+id/news_item_card_view"
     android:layout_width="match_parent"
     android:layout_height="256dp"
-    android:layout_margin="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
     android:background="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp">
 
@@ -31,7 +34,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E6FFFFFF">
+            android:background="@color/colorImageOverlay">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,6 +62,7 @@
                     android:paddingEnd="8dp"
                     android:text="Tap for details"
                     android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
                     android:textSize="14sp" />
             </LinearLayout>
 
