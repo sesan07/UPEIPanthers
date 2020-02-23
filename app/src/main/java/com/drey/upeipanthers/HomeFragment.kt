@@ -1,16 +1,19 @@
 package com.drey.upeipanthers
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -19,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
 private const val NEWS_FLIP_INTERVAL = 8000
+private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzN2Ke1ZG5ttp8ij9vhNwLT87yYH3LNwR9d6LhLuarZmLWYMiJx/exec"
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +70,12 @@ class HomeFragment : Fragment() {
             // update UI
             populateImportantNews(newsItems)
         })
+
+        view.findViewById<Button>(R.id.tickets_button).setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(TICKET_LINK))
+            startActivity(browserIntent)
+        }
+
 
         return view
     }
