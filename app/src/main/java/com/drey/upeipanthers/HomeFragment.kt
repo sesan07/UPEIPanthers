@@ -44,8 +44,8 @@ class HomeFragment : Fragment() {
     )
 
     private lateinit var navController: NavController
-    private lateinit var fixturesViewFlipper: ViewFlipper
-    private lateinit var newsViewFlipper: ViewFlipper
+    private lateinit var fixturesViewFlipper: HomeViewFlipper
+    private lateinit var newsViewFlipper: HomeViewFlipper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
