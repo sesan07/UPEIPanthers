@@ -116,10 +116,8 @@ class HomeFragment : Fragment() {
 
             val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
             val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
-            val descriptionTextView = cardView.findViewById<TextView>(R.id.description_text_view)
 
             titleTextView.text = item.title
-            descriptionTextView.text = item.description
             GlideApp.with(imageView.context)
                 .load(item.image_url)
                 .dontTransform()

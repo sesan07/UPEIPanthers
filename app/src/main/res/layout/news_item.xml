@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/news_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/ic_insert_picture_icon"
         tools:visibility="invisible" />
@@ -26,48 +26,40 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5" />
+            android:layout_weight="1" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.9"
-                android:background="@android:color/white" />
+            android:layout_height="wrap_content"
+            android:background="#E6FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/title_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="2"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:text="TextView"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="18sp" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:gravity="center"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                    android:textAlignment="viewStart"
-                    android:textColor="@android:color/secondary_text_light" />
+                    android:text="Tap for details"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </FrameLayout>

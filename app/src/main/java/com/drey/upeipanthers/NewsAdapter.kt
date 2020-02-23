@@ -33,12 +33,10 @@ class NewsAdapter(val navController: NavController) : RecyclerView.Adapter<NewsA
         val cardView = holder.cardView
         val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
         val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
-        val descriptionTextView = cardView.findViewById<TextView>(R.id.description_text_view)
 
         val newsItem = newsItems[position]
 
         titleTextView.text = newsItem.title
-        descriptionTextView.text = newsItem.description
         GlideApp.with(imageView.context)
             .load(newsItem.image_url)
             .dontTransform()
