@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,8 +47,11 @@ class FixturesFragment : Fragment() {
             false
         }
 
+        val boldTypeFace = ResourcesCompat.getFont(view.context, R.font.raleway_extra_bold)
+        val normalTypeFace = ResourcesCompat.getFont(view.context, R.font.raleway_semi_bold)
+
         val layoutManager = LinearLayoutManager(view.context)
-        val fixturesAdapter = FixturesAdapter()
+        val fixturesAdapter = FixturesAdapter(boldTypeFace!!, normalTypeFace!!)
         val recyclerView = view.findViewById(R.id.fixtures_recycler_view) as RecyclerView
 
         model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->

@@ -16,7 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
-class FixturesAdapter : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>(){
+class FixturesAdapter(private val boldTypeFace: Typeface, private val normalTypeFace: Typeface) :
+    RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHolder>() {
 
     private var fixtureItems = listOf<FixtureItem>()
 
@@ -47,12 +48,12 @@ class FixturesAdapter : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHold
         homeTeamTextView.text = fixtureItem.homeTeam
         awayTeamTextView.text = fixtureItem.awayTeam
         if (fixtureItem.isHomeGame) {
-            homeTeamTextView.setTypeface(null, Typeface.BOLD)
-            awayTeamTextView.setTypeface(null, Typeface.NORMAL)
+            homeTeamTextView.typeface = boldTypeFace
+            awayTeamTextView.typeface = normalTypeFace
         }
         else {
-            homeTeamTextView.setTypeface(null, Typeface.NORMAL)
-            awayTeamTextView.setTypeface(null, Typeface.BOLD)
+            homeTeamTextView.typeface = normalTypeFace
+            awayTeamTextView.typeface = boldTypeFace
         }
 
         when {
@@ -67,12 +68,12 @@ class FixturesAdapter : RecyclerView.Adapter<FixturesAdapter.FixtureItemViewHold
                 homeScoreTextView.text = fixtureItem.homeScore
                 awayScoreTextView.text = fixtureItem.awayScore
                 if (fixtureItem.isHomeGame) {
-                    homeScoreTextView.setTypeface(null, Typeface.BOLD)
-                    awayScoreTextView.setTypeface(null, Typeface.NORMAL)
+                    homeScoreTextView.typeface = boldTypeFace
+                    awayScoreTextView.typeface = normalTypeFace
                 }
                 else {
-                    homeScoreTextView.setTypeface(null, Typeface.NORMAL)
-                    awayScoreTextView.setTypeface(null, Typeface.BOLD)
+                    homeScoreTextView.typeface = normalTypeFace
+                    awayScoreTextView.typeface = boldTypeFace
                 }
             }
 

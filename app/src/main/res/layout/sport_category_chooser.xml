@@ -7,6 +7,7 @@
         android:id="@+id/fixture_category_chooser_text_view"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:fontFamily="@font/raleway_extra_bold"
         android:gravity="center"
         android:text="TextView"
         android:textAlignment="center"
