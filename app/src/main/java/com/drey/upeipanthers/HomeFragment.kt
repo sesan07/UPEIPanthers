@@ -36,9 +36,9 @@ class HomeFragment : Fragment() {
         FixtureCategory.WOMEN_SOCCER to R.drawable.soccer_women,
         FixtureCategory.WOMEN_HOCKEY to R.drawable.hockey_women,
         FixtureCategory.WOMEN_RUGBY to R.drawable.rugby_women,
-        FixtureCategory.TRACK_FIELD to R.drawable.rugby_women,
-        FixtureCategory.SWIMMING to R.drawable.rugby_women,
-        FixtureCategory.CROSS_COUNTRY to R.drawable.rugby_women
+        FixtureCategory.TRACK_FIELD to R.drawable.track_field,
+        FixtureCategory.SWIMMING to R.drawable.swimming,
+        FixtureCategory.CROSS_COUNTRY to R.drawable.cross_country
     )
 
     private lateinit var fixturesViewFlipper: HomeViewFlipper
