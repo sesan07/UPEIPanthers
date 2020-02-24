@@ -80,15 +80,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun populateImportantFixtures(fixtureItems: List<FixtureItem>) {
-        Log.e(TAG, "populatateImportantFixtures")
-
         val importantFixtureItems = mutableListOf<FixtureItem>()
         for (item in fixtureItems) {
             if (item.isImportant)
                 importantFixtureItems.add(item)
         }
-        if (importantFixtureItems.size == 0)
+
+        if (importantFixtureItems.isEmpty()) {
+            val view = ImageView(activity!!)
+            view.setImageResource(R.drawable.temp_image)
+            view.scaleType = ImageView.ScaleType.CENTER_CROP
+            view.alpha = 0.1f
+            fixturesViewFlipper.addView(view)
             return
+        }
+        else {
+            fixturesViewFlipper.removeAllViews()
+        }
 
         for (item in importantFixtureItems) {
             val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -118,8 +126,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun populateImportantNews(newsItems: List<NewsItem>) {
-
-
+        if (newsItems.isEmpty()) {
+            val view = ImageView(activity!!)
+            view.setImageResource(R.drawable.temp_image)
+            view.scaleType = ImageView.ScaleType.CENTER_CROP
+            view.alpha = 0.1f
+            newsViewFlipper.addView(view)
+            return
+        }
+        else {
+            newsViewFlipper.removeAllViews()
+        }
 
         var i = 0
         while (i < newsItems.size && i < MAX_NEWS_ITEMS) {
