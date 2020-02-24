@@ -20,4 +20,25 @@
         android:name="com.drey.upeipanthers.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
+    <action
+        android:id="@+id/action_global_home_dest"
+        app:destination="@id/home_dest"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <action
+        android:id="@+id/action_global_fixtures_dest"
+        app:destination="@id/fixtures_dest"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <action
+        android:id="@+id/action_global_news_dest"
+        app:destination="@id/news_dest"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>
