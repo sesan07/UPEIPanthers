@@ -1,19 +1,15 @@
 package com.drey.upeipanthers
 
-import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Space
 import android.widget.TextView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
 class FixturesAdapter(private val boldTypeFace: Typeface, private val normalTypeFace: Typeface) :

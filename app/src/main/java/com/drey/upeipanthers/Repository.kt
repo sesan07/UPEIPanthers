@@ -6,9 +6,6 @@ import com.tickaroo.tikxml.annotation.*
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import retrofit2.Retrofit
 import retrofit2.http.GET
-import java.lang.NullPointerException
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.NoSuchElementException
 
 private const val TAG = "Repository"

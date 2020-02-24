@@ -1,9 +1,7 @@
 package com.drey.upeipanthers
 
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
@@ -22,13 +20,6 @@ enum class FixtureCategory(val text: String) {
     TRACK_FIELD("Track & Field"),
     SWIMMING("Swimming"),
     CROSS_COUNTRY("Cross Country")
-}
-
-enum class DateContext {
-    TODAY,
-    TOMORROW,
-    UPCOMING,
-    PAST
 }
 
 private val VICTORY_COMMENTS = listOf(
