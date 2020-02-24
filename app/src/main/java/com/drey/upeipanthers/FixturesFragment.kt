@@ -48,14 +48,15 @@ class FixturesFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(view.context)
         val fixturesAdapter = FixturesAdapter()
+        val recyclerView = view.findViewById(R.id.fixtures_recycler_view) as RecyclerView
 
         model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
             // update UI
             fixturesAdapter.updateFixtureItems(fixtureItems)
+            recyclerView.smoothScrollToPosition(0)
             fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())
         })
 
-        val recyclerView = view.findViewById(R.id.fixtures_recycler_view) as RecyclerView
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = fixturesAdapter
 
