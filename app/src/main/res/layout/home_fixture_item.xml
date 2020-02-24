@@ -28,12 +28,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/home_date_context_text_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Upcoming"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"

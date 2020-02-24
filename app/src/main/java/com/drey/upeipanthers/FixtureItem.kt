@@ -68,8 +68,7 @@ class FixtureItem(
     var isVictory = false
     var hasScore = false
     var canHaveScore = false
-    var isImportant = false
-    var dateContext = DateContext.PAST
+    var isUpcoming = false
     val opponent: String
     val boxScoreLink: String
     var useBoxScore = false
@@ -147,23 +146,11 @@ class FixtureItem(
                 }
             }
         }
-
         val now = Date()
         val date1: Date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
             .parse(dateStr)!!
 
-        if (date1 > now) {
-            isImportant = true
-
-            val diff = date1.time - now.time
-            val daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt()
-            dateContext = when {
-                daysDiff == 0 -> DateContext.TODAY
-                daysDiff == 1 -> DateContext.TOMORROW
-                daysDiff > 1 -> DateContext.UPCOMING
-                else -> DateContext.PAST
-            }
-        }
+        isUpcoming = date1 > now
 
         year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(date1)
         month = SimpleDateFormat("MMM", Locale.ENGLISH).format(date1)
