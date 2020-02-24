@@ -1,10 +1,12 @@
 package com.drey.upeipanthers
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 private const val TAG = "FixturesViewModel"
 class FixturesViewModel : ViewModel() {
@@ -40,16 +42,22 @@ class FixturesViewModel : ViewModel() {
     private fun loadFixtureItems() {
         // Do an asynchronous operation to fetch newsItems.
         viewModelScope.launch {
-            val allItems = Repository.getFixtureItems()
-            allFixtureItems.value = allItems
+            try {
+                val allItems = Repository.getFixtureItems()
+                allFixtureItems.value = allItems
 
-            for (category in FixtureCategory.values()) {
-                categoryFixtureItems[category] = allItems.filter {
-                    it.fixtureCategory == category
+                for (category in FixtureCategory.values()) {
+                    categoryFixtureItems[category] = allItems.filter {
+                        it.fixtureCategory == category
+                    }
                 }
+
+                categoryChanged(currCategory)
+            }
+            catch (e: Exception) {
+                Log.e(TAG, "Exception while loading fixture Items: $e")
             }
 
-            categoryChanged(currCategory)
         }
     }
 
