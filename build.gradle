@@ -7,6 +7,7 @@ buildscript {
     ext.retrofit_version = "2.7.1"
     ext.tikxml_version = "0.8.13"
     ext.glide_version = "4.11.0"
+    ext.fragment_version = "1.2.2"
 
     repositories {
         google()
