@@ -91,6 +91,7 @@ class HomeFragment : Fragment() {
             view.scaleType = ImageView.ScaleType.CENTER_CROP
             view.alpha = 0.1f
             fixturesViewFlipper.addView(view)
+            fixturesViewFlipper.stopFlipping()
             return
         }
         else {
@@ -114,6 +115,12 @@ class HomeFragment : Fragment() {
             fixturesViewFlipper.addView(view)
 
         }
+
+        if (importantFixtureItems.size <= 1) {
+            fixturesViewFlipper.stopFlipping()
+            return
+        }
+
         fixturesViewFlipper.flipInterval = FIXTURES_FLIP_INTERVAL
         fixturesViewFlipper.setInAnimation(activity!!, R.anim.slide_in_right)
         fixturesViewFlipper.setOutAnimation(activity!!, R.anim.slide_out_left)
@@ -127,6 +134,7 @@ class HomeFragment : Fragment() {
             view.scaleType = ImageView.ScaleType.CENTER_CROP
             view.alpha = 0.1f
             newsViewFlipper.addView(view)
+            newsViewFlipper.stopFlipping()
             return
         }
         else {
@@ -161,6 +169,12 @@ class HomeFragment : Fragment() {
 
             i++
         }
+
+        if (newsItems.size <= 1) {
+            newsViewFlipper.stopFlipping()
+            return
+        }
+
         newsViewFlipper.flipInterval = NEWS_FLIP_INTERVAL
         newsViewFlipper.setInAnimation(activity!!, R.anim.slide_in_right)
         newsViewFlipper.setOutAnimation(activity!!, R.anim.slide_out_left)
