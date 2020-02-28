@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">UPEI Panthers</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fixtures">Fixtures</string>
     <string name="home">Home</string>
     <string name="news">News</string>
+
+    <string name="home_no_fixtures">Nothing :|\nUnless…\nNope, nothing :|</string>
+    <string name="home_no_news">No news here…</string>
+    <string name="no_fixtures_here">No fixtures here...</string>
+    <string name="no_news_here">No news here...</string>
+    <string name="textview">TextView</string>
+    <string name="fixture_image">Fixture Image</string>
+    <string name="upcoming_fixture">Upcoming Fixture</string>
 </resources>

@@ -5,14 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 private const val TAG = "NewsViewModel"
 class NewsViewModel : ViewModel() {
 
-    private val newsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
     private var attemptedLoad = false
+    var loaded = false
+        private set
+
+    private val newsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
 
     fun setUp() {
         if (!attemptedLoad) {
@@ -29,7 +33,9 @@ class NewsViewModel : ViewModel() {
         // Do an asynchronous operation to fetch newsItems.
         viewModelScope.launch {
             try {
-                newsItems.value = Repository.getNewsItems()
+                val items = Repository.getNewsItems()
+                loaded = true
+                newsItems.value = items
             }
             catch (e: Exception) {
                 Log.e(TAG, "Exception while loading new Items: $e")

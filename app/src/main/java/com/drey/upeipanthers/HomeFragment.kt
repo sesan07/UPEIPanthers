@@ -20,7 +20,7 @@ private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
 private const val NEWS_FLIP_INTERVAL = 8000
 private const val MAX_NEWS_ITEMS = 5
-private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzN2Ke1ZG5ttp8ij9vhNwLT87yYH3LNwR9d6LhLuarZmLWYMiJx/exec"
+private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzddQmFMkviRcu_7ktWOQVvXwu8qPaXJyhmdqKZPCDA3y6o4tw/exec"
 
 class HomeFragment : Fragment() {
 
@@ -58,13 +58,13 @@ class HomeFragment : Fragment() {
 
         fixturesViewFlipper = view.findViewById(R.id.fixtures_view_flipper)
         fixturesViewModel.getAllFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
-            populateImportantFixtures(fixtureItems)
+            updateImportantFixtures(fixtureItems)
         })
 
         newsViewFlipper = view.findViewById(R.id.news_view_flipper)
         newsViewModel.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
             // update UI
-            populateImportantNews(newsItems)
+            updateImportantNews(newsItems)
         })
 
         view.findViewById<Button>(R.id.tickets_button).setOnClickListener {
@@ -74,32 +74,43 @@ class HomeFragment : Fragment() {
             intent.launchUrl(activity!!, Uri.parse(TICKET_LINK))
         }
 
-
         return view
     }
 
-    private fun populateImportantFixtures(fixtureItems: List<FixtureItem>) {
+    private fun updateImportantFixtures(fixtureItems: List<FixtureItem>) {
+        fixturesViewFlipper.removeAllViews()
+
         val importantFixtureItems = mutableListOf<FixtureItem>()
         for (item in fixtureItems) {
             if (item.isUpcoming)
                 importantFixtureItems.add(item)
         }
 
-        if (importantFixtureItems.isEmpty()) {
-            val view = ImageView(activity!!)
-            view.setImageResource(R.drawable.temp_image)
-            view.scaleType = ImageView.ScaleType.CENTER_CROP
-            view.alpha = 0.1f
+        if (!fixturesViewModel.loaded) {
+            val view = layoutInflater.inflate(R.layout.home_loading_view, null)
             fixturesViewFlipper.addView(view)
             fixturesViewFlipper.stopFlipping()
             return
         }
-        else {
-            fixturesViewFlipper.removeAllViews()
+
+        if (importantFixtureItems.isEmpty()) {
+            val view = layoutInflater.inflate(R.layout.home_fixture_item, null)
+
+            val dateView = view.findViewById<TextView>(R.id.home_date_text_view)
+            val categoryView = view.findViewById<TextView>(R.id.home_fixture_category_text_view)
+            val opponentView = view.findViewById<TextView>(R.id.home_opponent_text_view)
+
+            dateView.visibility = View.GONE
+            categoryView.visibility = View.GONE
+
+            opponentView.text = resources.getString(R.string.home_no_fixtures)
+
+            fixturesViewFlipper.addView(view)
+            fixturesViewFlipper.stopFlipping()
+            return
         }
 
         for (item in importantFixtureItems) {
-            val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = layoutInflater.inflate(R.layout.home_fixture_item, null)
 
             val dateView = view.findViewById<TextView>(R.id.home_date_text_view)
@@ -127,25 +138,37 @@ class HomeFragment : Fragment() {
         fixturesViewFlipper.startFlipping()
     }
 
-    private fun populateImportantNews(newsItems: List<NewsItem>) {
-        if (newsItems.isEmpty()) {
-            val view = ImageView(activity!!)
-            view.setImageResource(R.drawable.temp_image)
-            view.scaleType = ImageView.ScaleType.CENTER_CROP
-            view.alpha = 0.1f
+    private fun updateImportantNews(newsItems: List<NewsItem>) {
+        newsViewFlipper.removeAllViews()
+
+        if (!newsViewModel.loaded) {
+            val view = layoutInflater.inflate(R.layout.home_loading_view, null)
             newsViewFlipper.addView(view)
             newsViewFlipper.stopFlipping()
             return
         }
-        else {
-            newsViewFlipper.removeAllViews()
+
+        if (newsItems.isEmpty()) {
+            val cardView = layoutInflater.inflate(R.layout.news_item, null) as CardView
+
+            val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
+            val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
+            val detailsTextView = cardView.findViewById<TextView>(R.id.news_details_text_view)
+
+            detailsTextView.visibility = View.GONE
+
+            titleTextView.text = resources.getString(R.string.home_no_news)
+            imageView.alpha = 0.1f
+
+            newsViewFlipper.addView(cardView)
+            newsViewFlipper.stopFlipping()
+            return
         }
 
         var i = 0
         while (i < newsItems.size && i < MAX_NEWS_ITEMS) {
             val item = newsItems[i]
 
-            val layoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val cardView = layoutInflater.inflate(R.layout.news_item, null) as CardView
 
             val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
