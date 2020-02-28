@@ -23,11 +23,10 @@ enum class FixtureCategory(val text: String) {
 }
 
 private val VICTORY_COMMENTS = listOf(
-    "EZ WIN",
     "Too easy",
     "Huzzah!!",
-    "For Glory!!",
-    "For Honor!!",
+    "I like",
+    "Victory!",
     ":^)",
     ":D"
 )
@@ -37,7 +36,7 @@ private const val LOSS_COMMENT = "Meh.."
 class FixtureItem(
     title: String,
     val link: String,
-    val description: String,
+    description: String,
     categoryStr: String,
     dateStr: String,
     score: String,

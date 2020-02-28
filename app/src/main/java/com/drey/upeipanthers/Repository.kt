@@ -12,7 +12,7 @@ private const val TAG = "Repository"
 private const val BASE_URL = "http://gopanthersgo.ca"
 private const val NEWS_URL = "/landing/headlines-featured?feed=rss_2.0"
 private const val FIXTURES_URL = "/composite?print=rss"
-private const val MAX_FIXTURES = 200
+private const val MAX_FIXTURES = 400
 
 
 class Repository {

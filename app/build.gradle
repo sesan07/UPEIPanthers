@@ -15,8 +15,8 @@ android {
         applicationId "com.drey.upeipanthers"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 3
-        versionName '1.02'
+        versionCode 5
+        versionName '1.03'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

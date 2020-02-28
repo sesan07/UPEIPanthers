@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
-private const val NEWS_FLIP_INTERVAL = 8000
+private const val NEWS_FLIP_INTERVAL = 6000
 private const val MAX_NEWS_ITEMS = 5
 private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzddQmFMkviRcu_7ktWOQVvXwu8qPaXJyhmdqKZPCDA3y6o4tw/exec"
 
