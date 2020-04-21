@@ -1,6 +1,5 @@
 package com.drey.upeipanthers
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +18,7 @@ import androidx.lifecycle.Observer
 private const val TAG = "HomeFragment"
 private const val FIXTURES_FLIP_INTERVAL = 5000
 private const val NEWS_FLIP_INTERVAL = 6000
+private const val MAX_FIXTURE_ITEMS = 5
 private const val MAX_NEWS_ITEMS = 5
 private const val TICKET_LINK = "https://script.google.com/a/macros/upei.ca/s/AKfycbzddQmFMkviRcu_7ktWOQVvXwu8qPaXJyhmdqKZPCDA3y6o4tw/exec"
 
@@ -80,10 +80,10 @@ class HomeFragment : Fragment() {
     private fun updateImportantFixtures(fixtureItems: List<FixtureItem>) {
         fixturesViewFlipper.removeAllViews()
 
-        val importantFixtureItems = mutableListOf<FixtureItem>()
+        val upcomingFixtures = mutableListOf<FixtureItem>()
         for (item in fixtureItems) {
             if (item.isUpcoming)
-                importantFixtureItems.add(item)
+                upcomingFixtures.add(item)
         }
 
         if (!fixturesViewModel.loaded) {
@@ -93,7 +93,9 @@ class HomeFragment : Fragment() {
             return
         }
 
-        if (importantFixtureItems.isEmpty()) {
+        val closestFixtures = upcomingFixtures.takeLast(MAX_FIXTURE_ITEMS)
+
+        if (closestFixtures.isEmpty()) {
             val view = layoutInflater.inflate(R.layout.home_fixture_item, null)
 
             val dateView = view.findViewById<TextView>(R.id.home_date_text_view)
@@ -110,7 +112,7 @@ class HomeFragment : Fragment() {
             return
         }
 
-        for (item in importantFixtureItems) {
+        for (item in closestFixtures.asReversed()) {
             val view = layoutInflater.inflate(R.layout.home_fixture_item, null)
 
             val dateView = view.findViewById<TextView>(R.id.home_date_text_view)
@@ -124,10 +126,9 @@ class HomeFragment : Fragment() {
             imageView.setImageResource(fixtureCategoryImages[item.fixtureCategory]!!)
 
             fixturesViewFlipper.addView(view)
-
         }
 
-        if (importantFixtureItems.size <= 1) {
+        if (closestFixtures.size <= 1) {
             fixturesViewFlipper.stopFlipping()
             return
         }
@@ -165,10 +166,9 @@ class HomeFragment : Fragment() {
             return
         }
 
-        var i = 0
-        while (i < newsItems.size && i < MAX_NEWS_ITEMS) {
-            val item = newsItems[i]
+        val latestNews = newsItems.take(MAX_NEWS_ITEMS)
 
+        for (item in latestNews) {
             val cardView = layoutInflater.inflate(R.layout.news_item, null) as CardView
 
             val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
@@ -189,11 +189,9 @@ class HomeFragment : Fragment() {
             }
 
             newsViewFlipper.addView(cardView)
-
-            i++
         }
 
-        if (newsItems.size <= 1) {
+        if (latestNews.size <= 1) {
             newsViewFlipper.stopFlipping()
             return
         }
