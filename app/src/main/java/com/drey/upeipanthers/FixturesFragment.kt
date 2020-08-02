@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
@@ -21,7 +20,7 @@ class FixturesFragment : Fragment() {
     private val model: FixturesViewModel by activityViewModels()
     private lateinit var progressBar: ProgressBar
     private lateinit var emptyTextView: TextView
-    private lateinit var sportCategoriesAdapter: SportCategoriesAdapter
+//    private lateinit var sportCategoriesAdapter: SportCategoriesAdapter
     private lateinit var fixturesAdapter: FixturesAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -30,24 +29,6 @@ class FixturesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_fixtures, container, false)
-
-        val expandableListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view1)
-
-        sportCategoriesAdapter = SportCategoriesAdapter(
-            view.context, model.currCategory,
-            SportCategory.values().toList()
-        )
-
-        expandableListView.setAdapter(sportCategoriesAdapter)
-
-        expandableListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            val selectedCategory = SportCategory.values()[childPosition]
-
-            sportCategoriesAdapter.setCurrCategory(selectedCategory)
-            model.categoryChanged(selectedCategory)
-            expandableListView.collapseGroup(groupPosition)
-            false
-        }
 
         progressBar = view.findViewById(R.id.fixtures_progress_bar) as ProgressBar
         emptyTextView = view.findViewById(R.id.fixtures_empty_text_view) as TextView
@@ -83,6 +64,5 @@ class FixturesFragment : Fragment() {
 
         fixturesAdapter.updateFixtureItems(fixtureItems)
         recyclerView.smoothScrollToPosition(0)
-//        fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())
     }
 }

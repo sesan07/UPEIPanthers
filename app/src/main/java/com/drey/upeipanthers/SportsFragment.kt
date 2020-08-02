@@ -1,19 +1,25 @@
 package com.drey.upeipanthers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.reflect.typeOf
+
+private const val TAG = "SportsFragment"
 
 class SportsFragment : Fragment() {
 
-    private val model: FixturesViewModel by viewModels()
+    private val model: FixturesViewModel by activityViewModels()
 
     private lateinit var categoriesAdapter: SportCategoriesAdapter
     private lateinit var viewPager: ViewPager2
@@ -50,7 +56,6 @@ class SportsFragment : Fragment() {
         viewPagerAdapter = SportsViewPagerAdapter(this)
         viewPager = view.findViewById(R.id.view_pager)
         viewPager.adapter = viewPagerAdapter
-
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
