@@ -12,25 +12,11 @@ import android.widget.TextView
 
 private const val TAG = "FixtureCatAdapter"
 
-class FixtureCategoriesAdapter(
+class SportCategoriesAdapter(
     private val context: Context,
-    private var currCategory: FixtureCategory,
-    private val categoryItems: List<FixtureCategory>,
-    private var categoryCounts: List<Int>
+    private var currCategory: SportCategory,
+    private val categoryItems: List<SportCategory>
 ) : BaseExpandableListAdapter() {
-
-    private val fixtureCategoryIcons = hashMapOf (
-        FixtureCategory.MEN_BASKETBALL to R.drawable.ic_basketball,
-        FixtureCategory.MEN_SOCCER to R.drawable.ic_soccer,
-        FixtureCategory.MEN_HOCKEY to R.drawable.ic_ice_hockey,
-        FixtureCategory.WOMEN_BASKETBALL to R.drawable.ic_basketball,
-        FixtureCategory.WOMEN_SOCCER to R.drawable.ic_soccer,
-        FixtureCategory.WOMEN_HOCKEY to R.drawable.ic_ice_hockey,
-        FixtureCategory.WOMEN_RUGBY to R.drawable.ic_rugby,
-        FixtureCategory.TRACK_FIELD to R.drawable.ic_track_field,
-        FixtureCategory.SWIMMING to R.drawable.ic_swimming,
-        FixtureCategory.CROSS_COUNTRY to R.drawable.ic_cross_country
-    )
 
     override fun getGroup(groupPosition: Int): Any {
         return currCategory
@@ -52,7 +38,7 @@ class FixtureCategoriesAdapter(
         }
         val groupTextView = view!!.findViewById<TextView>(R.id.fixture_category_chooser_text_view)
         groupTextView.setTypeface(null, Typeface.BOLD)
-        groupTextView.text = currCategory.text
+        groupTextView.text = SportManager.getSport(currCategory).name
         return view
     }
 
@@ -80,9 +66,9 @@ class FixtureCategoriesAdapter(
         val categoryCountTextView = view.findViewById<TextView>(R.id.category_count_view)
         val icon = view.findViewById<ImageView>(R.id.category_image_view)
 
-        categoryTextView.text = categoryItem.text
-        categoryCountTextView.text = categoryCounts[childPosition].toString()
-        icon.setImageResource(fixtureCategoryIcons[categoryItem]!!)
+        categoryTextView.text = SportManager.getSport(categoryItem).name
+        categoryCountTextView.text = SportManager.getSport(categoryItem).fixtureCount.toString()
+        icon.setImageResource(SportManager.getSport(categoryItem).icon)
 
         if (categoryItem == currCategory)
             view.findViewById<FrameLayout>(R.id.highlighted_bg).visibility = View.VISIBLE
@@ -100,13 +86,8 @@ class FixtureCategoriesAdapter(
         return 1
     }
 
-    fun setCurrCategory(category: FixtureCategory) {
+    fun setCurrCategory(category: SportCategory) {
         currCategory = category
-        notifyDataSetChanged()
-    }
-
-    fun updateCategoryCounts(categoryCounts: List<Int>) {
-        this.categoryCounts = categoryCounts
         notifyDataSetChanged()
     }
 }

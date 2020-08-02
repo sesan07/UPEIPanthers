@@ -21,7 +21,7 @@ class FixturesFragment : Fragment() {
     private val model: FixturesViewModel by activityViewModels()
     private lateinit var progressBar: ProgressBar
     private lateinit var emptyTextView: TextView
-    private lateinit var fixtureCategoriesAdapter: FixtureCategoriesAdapter
+    private lateinit var sportCategoriesAdapter: SportCategoriesAdapter
     private lateinit var fixturesAdapter: FixturesAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -31,20 +31,19 @@ class FixturesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_fixtures, container, false)
 
-        val expandableListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view)
+        val expandableListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view1)
 
-        fixtureCategoriesAdapter = FixtureCategoriesAdapter(
+        sportCategoriesAdapter = SportCategoriesAdapter(
             view.context, model.currCategory,
-            FixtureCategory.values().toList(),
-            model.getCategoryCounts()
+            SportCategory.values().toList()
         )
 
-        expandableListView.setAdapter(fixtureCategoriesAdapter)
+        expandableListView.setAdapter(sportCategoriesAdapter)
 
         expandableListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            val selectedCategory = FixtureCategory.values()[childPosition]
+            val selectedCategory = SportCategory.values()[childPosition]
 
-            fixtureCategoriesAdapter.setCurrCategory(selectedCategory)
+            sportCategoriesAdapter.setCurrCategory(selectedCategory)
             model.categoryChanged(selectedCategory)
             expandableListView.collapseGroup(groupPosition)
             false
@@ -84,6 +83,6 @@ class FixturesFragment : Fragment() {
 
         fixturesAdapter.updateFixtureItems(fixtureItems)
         recyclerView.smoothScrollToPosition(0)
-        fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())
+//        fixtureCategoriesAdapter.updateCategoryCounts(model.getCategoryCounts())
     }
 }

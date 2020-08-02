@@ -14,6 +14,12 @@ private const val NEWS_URL = "/landing/headlines-featured?feed=rss_2.0"
 private const val FIXTURES_URL = "/composite?print=rss"
 private const val MAX_FIXTURES = 400
 
+private fun getRosterUrl(startYear: Int): String {
+    val startYearStr = startYear.toString()
+    val endYear = startYearStr.substring(startYearStr.length - 2).toInt() + 1
+    return "/sports/mbkb/$startYear-$endYear/roster?feed=rss_2.0"
+}
+
 
 class Repository {
 
@@ -105,6 +111,7 @@ class Repository {
         }
 
         suspend fun getFixtureItems(): List<FixtureItem> {
+            getRosterUrl(2019)
             val fixtureItems = mutableListOf<FixtureItem>()
 
             val webService = Retrofit.Builder()

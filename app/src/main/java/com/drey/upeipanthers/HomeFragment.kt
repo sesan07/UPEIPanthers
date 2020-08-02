@@ -27,19 +27,6 @@ class HomeFragment : Fragment() {
     private val fixturesViewModel: FixturesViewModel by activityViewModels()
     private val newsViewModel: NewsViewModel by activityViewModels()
 
-    private val fixtureCategoryImages = hashMapOf (
-        FixtureCategory.MEN_BASKETBALL to R.drawable.bball_men,
-        FixtureCategory.MEN_SOCCER to R.drawable.soccer_men,
-        FixtureCategory.MEN_HOCKEY to R.drawable.hockey_men,
-        FixtureCategory.WOMEN_BASKETBALL to R.drawable.bball_women,
-        FixtureCategory.WOMEN_SOCCER to R.drawable.soccer_women,
-        FixtureCategory.WOMEN_HOCKEY to R.drawable.hockey_women,
-        FixtureCategory.WOMEN_RUGBY to R.drawable.rugby_women,
-        FixtureCategory.TRACK_FIELD to R.drawable.track_field,
-        FixtureCategory.SWIMMING to R.drawable.swimming,
-        FixtureCategory.CROSS_COUNTRY to R.drawable.cross_country
-    )
-
     private lateinit var fixturesViewFlipper: HomeViewFlipper
     private lateinit var newsViewFlipper: HomeViewFlipper
 
@@ -57,21 +44,21 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         fixturesViewFlipper = view.findViewById(R.id.fixtures_view_flipper)
-        fixturesViewModel.getAllFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
+        fixturesViewModel.getAllFixtureItems().observe(viewLifecycleOwner, Observer{ fixtureItems ->
             updateImportantFixtures(fixtureItems)
         })
 
         newsViewFlipper = view.findViewById(R.id.news_view_flipper)
-        newsViewModel.getNewsItems().observe(viewLifecycleOwner, Observer<List<NewsItem>>{ newsItems ->
+        newsViewModel.getNewsItems().observe(viewLifecycleOwner, Observer{ newsItems ->
             // update UI
             updateImportantNews(newsItems)
         })
 
         view.findViewById<Button>(R.id.tickets_button).setOnClickListener {
             val builder = CustomTabsIntent.Builder()
-            builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
             val intent = builder.build()
-            intent.launchUrl(activity!!, Uri.parse(TICKET_LINK))
+            intent.launchUrl(requireContext(), Uri.parse(TICKET_LINK))
         }
 
         return view
@@ -121,9 +108,9 @@ class HomeFragment : Fragment() {
             val imageView = view.findViewById<ImageView>(R.id.home_fixture_image_view)
 
             dateView.text = item.date
-            categoryView.text = item.fixtureCategory.text
+            categoryView.text = SportManager.getSport(item.sportCategory).name
             opponentView.text = item.opponent
-            imageView.setImageResource(fixtureCategoryImages[item.fixtureCategory]!!)
+            imageView.setImageResource(SportManager.getSport(item.sportCategory).image)
 
             fixturesViewFlipper.addView(view)
         }
@@ -134,8 +121,8 @@ class HomeFragment : Fragment() {
         }
 
         fixturesViewFlipper.flipInterval = FIXTURES_FLIP_INTERVAL
-        fixturesViewFlipper.setInAnimation(activity!!, R.anim.slide_in_right)
-        fixturesViewFlipper.setOutAnimation(activity!!, R.anim.slide_out_left)
+        fixturesViewFlipper.setInAnimation(requireContext(), R.anim.slide_in_right)
+        fixturesViewFlipper.setOutAnimation(requireContext(), R.anim.slide_out_left)
         fixturesViewFlipper.startFlipping()
     }
 
@@ -183,9 +170,9 @@ class HomeFragment : Fragment() {
 
             cardView.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
-                builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
                 val intent = builder.build()
-                intent.launchUrl(activity!!, Uri.parse(item.link))
+                intent.launchUrl(requireContext(), Uri.parse(item.link))
             }
 
             newsViewFlipper.addView(cardView)
@@ -197,8 +184,8 @@ class HomeFragment : Fragment() {
         }
 
         newsViewFlipper.flipInterval = NEWS_FLIP_INTERVAL
-        newsViewFlipper.setInAnimation(activity!!, R.anim.slide_in_right)
-        newsViewFlipper.setOutAnimation(activity!!, R.anim.slide_out_left)
+        newsViewFlipper.setInAnimation(requireContext(), R.anim.slide_in_right)
+        newsViewFlipper.setOutAnimation(requireContext(), R.anim.slide_out_left)
         newsViewFlipper.startFlipping()
     }
 }

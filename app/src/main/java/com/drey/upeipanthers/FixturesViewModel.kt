@@ -14,11 +14,11 @@ class FixturesViewModel : ViewModel() {
     private var attemptedLoad = false
     var loaded = false
         private set
-    var currCategory = FixtureCategory.values()[0]
+    var currCategory = SportCategory.values()[0]
         private set
 
     // Map of categories to Fixture items
-    private var categoryFixtureItems = hashMapOf<FixtureCategory, List<FixtureItem>>()
+    private var categoryFixtureItems = hashMapOf<SportCategory, List<FixtureItem>>()
     // Fixture items for all categories
     private val allFixtureItems = MutableLiveData<List<FixtureItem>>(listOf())
     // Fixture items for current category
@@ -26,7 +26,7 @@ class FixturesViewModel : ViewModel() {
 
     fun setUp() {
         if (!attemptedLoad) {
-            for (category in FixtureCategory.values()) {
+            for (category in SportCategory.values()) {
                 categoryFixtureItems[category] = listOf()
             }
 
@@ -52,10 +52,12 @@ class FixturesViewModel : ViewModel() {
                 loaded = true
                 allFixtureItems.value = allItems
 
-                for (category in FixtureCategory.values()) {
-                    categoryFixtureItems[category] = allItems.filter {
-                        it.fixtureCategory == category
+                for (category in SportCategory.values()) {
+                    val categoryItems = allItems.filter {
+                        it.sportCategory == category
                     }
+                    categoryFixtureItems[category] = categoryItems
+                    SportManager.getSport(category).fixtureCount = categoryItems.size
                 }
 
                 categoryChanged(currCategory)
@@ -66,18 +68,18 @@ class FixturesViewModel : ViewModel() {
         }
     }
 
-    fun categoryChanged(category: FixtureCategory) {
+    fun categoryChanged(category: SportCategory) {
         currCategory = category
         currFixtureItems.value = categoryFixtureItems[category]
     }
 
-    fun getCategoryCounts(): List<Int> {
-        val counts = mutableListOf<Int>()
-        val fixtures = FixtureCategory.values()
-        for (fixture in fixtures) {
-            counts.add(categoryFixtureItems[fixture]!!.size)
-        }
-
-        return counts
-    }
+//    fun getCategoryCounts(): List<Int> {
+//        val counts = mutableListOf<Int>()
+//        val fixtures = SportCategory.values()
+//        for (fixture in fixtures) {
+//            counts.add(categoryFixtureItems[fixture]!!.size)
+//        }
+//
+//        return counts
+//    }
 }
