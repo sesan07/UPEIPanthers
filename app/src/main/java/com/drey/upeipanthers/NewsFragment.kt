@@ -44,7 +44,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun updateNewsUI(newsItems: List<NewsItem>) {
-        if (!model.loaded)
+        if (model.isLoading)
             return
 
         progressBar.visibility = View.GONE

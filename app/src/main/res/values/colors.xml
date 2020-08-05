@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#4D7916</color>
     <color name="colorAccent">#f5bb00</color>
     <color name="colorBackground">#202020</color>
+    <color name="colorBackgroundDarker">#181818</color>
     <color name="colorCardBackground">#2E2E2E</color>
     <color name="colorImageOverlay">#F22E2E2E</color>
     <color name="colorBottomNav">#CCFFFFFF</color>

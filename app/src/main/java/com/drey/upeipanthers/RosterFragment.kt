@@ -5,55 +5,93 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val TAG = "RosterFragment"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RosterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RosterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val model: RostersViewModel by activityViewModels()
+    private lateinit var progressBar: ProgressBar
+    private lateinit var emptyTextView: TextView
+    private lateinit var rosterAdapter: RosterAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var seasonsSpinner: Spinner
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_roster, container, false)
+        val view = inflater.inflate(R.layout.fragment_roster, container, false)
+
+        progressBar = view.findViewById(R.id.roster_progress_bar) as ProgressBar
+        emptyTextView = view.findViewById(R.id.roster_empty_text_view) as TextView
+        emptyTextView.visibility = View.GONE
+
+        seasonsSpinner = view.findViewById(R.id.roster_season_spinner)
+        spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_text_view)
+        seasonsSpinner.adapter = spinnerAdapter
+        seasonsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                onRosterSeasonSelected(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+        }
+
+        recyclerView = view.findViewById(R.id.roster_recycler_view) as RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        rosterAdapter = RosterAdapter()
+        recyclerView.adapter = rosterAdapter
+
+        model.getCurrRosterItems().observe(viewLifecycleOwner, Observer{ rosterItems ->
+            updateRosterUI(rosterItems)
+        })
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RosterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RosterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun updateRosterUI(rosterItems: List<RosterItem>) {
+        if (model.isLoading) {
+            progressBar.visibility = View.VISIBLE
+            recyclerView.visibility = View.INVISIBLE
+            return
+        } else {
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }
+
+
+        val currCategory = model.currCategory
+        val categorySeasons = SportManager.getSport(currCategory).rosterSeasons
+
+        spinnerAdapter.clear()
+        if (categorySeasons.isNotEmpty()) {
+            seasonsSpinner.visibility = View.VISIBLE
+            spinnerAdapter.addAll(categorySeasons)
+            seasonsSpinner.setSelection(model.currSeasonIndex)
+        } else {
+            seasonsSpinner.visibility = View.INVISIBLE
+        }
+
+        emptyTextView.visibility = if (rosterItems.isEmpty()) View.VISIBLE else View.GONE
+
+        rosterAdapter.updateRosterItems(rosterItems)
+        recyclerView.smoothScrollToPosition(0)
+    }
+
+    private fun onRosterSeasonSelected(index: Int) {
+        model.onSeasonChanged(index)
     }
 }

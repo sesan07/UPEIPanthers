@@ -1,25 +1,25 @@
 package com.drey.upeipanthers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
-import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.reflect.typeOf
 
 private const val TAG = "SportsFragment"
 
 class SportsFragment : Fragment() {
 
-    private val model: FixturesViewModel by activityViewModels()
+    private val sportsViewModel: SportsViewModel by activityViewModels()
+    private val fixturesViewModel: FixturesViewModel by activityViewModels()
+    private val rostersViewModel: RostersViewModel by activityViewModels()
 
     private lateinit var categoriesAdapter: SportCategoriesAdapter
     private lateinit var viewPager: ViewPager2
@@ -33,21 +33,32 @@ class SportsFragment : Fragment() {
 
         val categoriesListView = view.findViewById<ExpandableListView>(R.id.category_expandable_list_view)
 
+        val typeFace = ResourcesCompat.getFont(requireContext(), R.font.raleway_semi_bold)
         categoriesAdapter = SportCategoriesAdapter(
-            view.context, model.currCategory,
-            SportCategory.values().toList()
+            requireContext(),
+            sportsViewModel.getCurrCategory().value!!,
+            SportCategory.values().toList(),
+            typeFace!!
         )
 
         categoriesListView.setAdapter(categoriesAdapter)
 
         categoriesListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             val selectedCategory = SportCategory.values()[childPosition]
+            sportsViewModel.onCategoryChanged(selectedCategory)
 
             categoriesAdapter.setCurrCategory(selectedCategory)
-            model.categoryChanged(selectedCategory)
+//            fixturesViewModel.categoryChanged(selectedCategory)
             categoriesListView.collapseGroup(groupPosition)
             false
         }
+
+
+
+        sportsViewModel.getCurrCategory().observe(viewLifecycleOwner, Observer { category ->
+            fixturesViewModel.onCategoryChanged(category)
+            rostersViewModel.onCategoryChanged(category)
+        })
 
         return view
     }
@@ -61,7 +72,7 @@ class SportsFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Fixtures"
-                1 -> tab.text = "Roster"
+                1 -> tab.text = "Rosters"
             }
         }.attach()
     }

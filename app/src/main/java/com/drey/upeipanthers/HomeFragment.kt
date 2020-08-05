@@ -30,12 +30,6 @@ class HomeFragment : Fragment() {
     private lateinit var fixturesViewFlipper: HomeViewFlipper
     private lateinit var newsViewFlipper: HomeViewFlipper
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        newsViewModel.setUp()
-        fixturesViewModel.setUp()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +38,7 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         fixturesViewFlipper = view.findViewById(R.id.fixtures_view_flipper)
+
         fixturesViewModel.getAllFixtureItems().observe(viewLifecycleOwner, Observer{ fixtureItems ->
             updateImportantFixtures(fixtureItems)
         })
@@ -73,7 +68,7 @@ class HomeFragment : Fragment() {
                 upcomingFixtures.add(item)
         }
 
-        if (!fixturesViewModel.loaded) {
+        if (fixturesViewModel.isLoading) {
             val view = layoutInflater.inflate(R.layout.home_loading_view, null)
             fixturesViewFlipper.addView(view)
             fixturesViewFlipper.stopFlipping()
@@ -129,7 +124,7 @@ class HomeFragment : Fragment() {
     private fun updateImportantNews(newsItems: List<NewsItem>) {
         newsViewFlipper.removeAllViews()
 
-        if (!newsViewModel.loaded) {
+        if (newsViewModel.isLoading) {
             val view = layoutInflater.inflate(R.layout.home_loading_view, null)
             newsViewFlipper.addView(view)
             newsViewFlipper.stopFlipping()
@@ -162,7 +157,7 @@ class HomeFragment : Fragment() {
             val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
 
             titleTextView.text = item.title
-            GlideApp.with(imageView.context)
+            GlideApp.with(requireContext())
                 .load(item.image_url)
                 .placeholder(R.drawable.temp_image)
                 .dontTransform()

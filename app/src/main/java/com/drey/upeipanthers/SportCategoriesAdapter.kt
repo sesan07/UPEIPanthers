@@ -15,7 +15,8 @@ private const val TAG = "FixtureCatAdapter"
 class SportCategoriesAdapter(
     private val context: Context,
     private var currCategory: SportCategory,
-    private val categoryItems: List<SportCategory>
+    private val categoryItems: List<SportCategory>,
+    private val typeFace: Typeface
 ) : BaseExpandableListAdapter() {
 
     override fun getGroup(groupPosition: Int): Any {
@@ -37,7 +38,7 @@ class SportCategoriesAdapter(
             view = layoutInflater.inflate(R.layout.sport_category_chooser, null)
         }
         val groupTextView = view!!.findViewById<TextView>(R.id.fixture_category_chooser_text_view)
-        groupTextView.setTypeface(null, Typeface.BOLD)
+        groupTextView.typeface = typeFace
         groupTextView.text = SportManager.getSport(currCategory).name
         return view
     }

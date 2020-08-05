@@ -4,18 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context=".SportsFragment">
 
     <ExpandableListView
         android:id="@+id/category_expandable_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackgroundDarker"
+        android:groupIndicator="@drawable/spinner_background"
+        android:scrollbars="none" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
         app:tabGravity="center"
         app:tabTextAppearance="@style/tab_text" />
 

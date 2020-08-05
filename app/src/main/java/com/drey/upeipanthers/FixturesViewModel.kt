@@ -11,30 +11,31 @@ import java.lang.Exception
 private const val TAG = "FixturesViewModel"
 class FixturesViewModel : ViewModel() {
 
-    private var attemptedLoad = false
-    var loaded = false
-        private set
-    var currCategory = SportCategory.values()[0]
+    private var firstSetup = true
+    var isLoading = false
         private set
 
-    // Map of categories to Fixture items
+    private var isNetworkAvailable = false
+
+    private var currCategory = SportCategory.MEN_BASKETBALL
+
+    // Map of sport categories to Fixture items
     private var categoryFixtureItems = hashMapOf<SportCategory, List<FixtureItem>>()
     // Fixture items for all categories
-    private val allFixtureItems = MutableLiveData<List<FixtureItem>>(listOf())
+    private var allFixtureItems = MutableLiveData(listOf<FixtureItem>())
     // Fixture items for current category
-    private val currFixtureItems = MutableLiveData<List<FixtureItem>>(listOf())
+    private var currFixtureItems = MutableLiveData(listOf<FixtureItem>())
 
     fun setUp() {
-        if (!attemptedLoad) {
+        if (firstSetup) {
             for (category in SportCategory.values()) {
                 categoryFixtureItems[category] = listOf()
             }
 
-            loadFixtureItems()
-            attemptedLoad = true
+//            loadFixtureItems()
+            firstSetup = false
         }
     }
-
 
     fun getCurrFixtureItems(): LiveData<List<FixtureItem>> {
         return currFixtureItems
@@ -45,12 +46,22 @@ class FixturesViewModel : ViewModel() {
     }
 
     private fun loadFixtureItems() {
+        if (isLoading) {
+            Log.d(TAG, "Fixtures is already loading")
+            return
+        }
+
+        if (!isNetworkAvailable) {
+            Log.e(TAG, "Network is not available, can't load fixtures")
+            return
+        }
         // Do an asynchronous operation to fetch fixtureItems.
         viewModelScope.launch {
+            isLoading = true
+
+            var allItems = listOf<FixtureItem>()
             try {
-                val allItems = Repository.getFixtureItems()
-                loaded = true
-                allFixtureItems.value = allItems
+                allItems = Repository.getFixtureItems()
 
                 for (category in SportCategory.values()) {
                     val categoryItems = allItems.filter {
@@ -59,27 +70,28 @@ class FixturesViewModel : ViewModel() {
                     categoryFixtureItems[category] = categoryItems
                     SportManager.getSport(category).fixtureCount = categoryItems.size
                 }
-
-                categoryChanged(currCategory)
             }
             catch (e: Exception) {
                 Log.e(TAG, "Exception while loading fixture Items: $e")
             }
+
+            isLoading = false
+            allFixtureItems.value = allItems
+            onCategoryChanged(currCategory)
         }
     }
 
-    fun categoryChanged(category: SportCategory) {
+    fun onCategoryChanged(category: SportCategory) {
         currCategory = category
-        currFixtureItems.value = categoryFixtureItems[category]
+        currFixtureItems.value = categoryFixtureItems.getOrElse(currCategory, { listOf() })
     }
 
-//    fun getCategoryCounts(): List<Int> {
-//        val counts = mutableListOf<Int>()
-//        val fixtures = SportCategory.values()
-//        for (fixture in fixtures) {
-//            counts.add(categoryFixtureItems[fixture]!!.size)
-//        }
-//
-//        return counts
-//    }
+    fun onNetworkAvailabilityChanged(isAvailable: Boolean) {
+        isNetworkAvailable = isAvailable
+
+        if (currFixtureItems.value.isNullOrEmpty() && isNetworkAvailable) {
+            Log.d(TAG, "Network is now available, loading fixtures")
+            loadFixtureItems()
+        }
+    }
 }

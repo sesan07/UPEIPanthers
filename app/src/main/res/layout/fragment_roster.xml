@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="4dp"
+    android:orientation="vertical"
     tools:context=".RosterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Spinner
+        android:id="@+id/roster_season_spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ROSTERRRR"
-        android:textSize="36sp" />
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:padding="8dp"
+        android:textAlignment="center" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/roster_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:padding="32dp" />
+
+    <TextView
+        android:id="@+id/roster_empty_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/raleway_extra_bold"
+        android:gravity="center"
+        android:text="@string/no_roster_here"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/roster_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

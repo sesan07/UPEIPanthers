@@ -20,7 +20,6 @@ class FixturesFragment : Fragment() {
     private val model: FixturesViewModel by activityViewModels()
     private lateinit var progressBar: ProgressBar
     private lateinit var emptyTextView: TextView
-//    private lateinit var sportCategoriesAdapter: SportCategoriesAdapter
     private lateinit var fixturesAdapter: FixturesAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -34,14 +33,14 @@ class FixturesFragment : Fragment() {
         emptyTextView = view.findViewById(R.id.fixtures_empty_text_view) as TextView
         emptyTextView.visibility = View.GONE
 
-        val boldTypeFace = ResourcesCompat.getFont(view.context, R.font.raleway_extra_bold)
-        val normalTypeFace = ResourcesCompat.getFont(view.context, R.font.raleway_semi_bold)
+        val boldTypeFace = ResourcesCompat.getFont(requireContext(), R.font.raleway_extra_bold)
+        val normalTypeFace = ResourcesCompat.getFont(requireContext(), R.font.raleway_semi_bold)
 
-        val layoutManager = LinearLayoutManager(view.context)
+        val layoutManager = LinearLayoutManager(requireContext())
         fixturesAdapter = FixturesAdapter(boldTypeFace!!, normalTypeFace!!)
         recyclerView = view.findViewById(R.id.fixtures_recycler_view) as RecyclerView
 
-        model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer<List<FixtureItem>>{ fixtureItems ->
+        model.getCurrFixtureItems().observe(viewLifecycleOwner, Observer{ fixtureItems ->
             updateFixturesUI(fixtureItems)
         })
 
@@ -52,7 +51,7 @@ class FixturesFragment : Fragment() {
     }
 
     private fun updateFixturesUI(fixtureItems: List<FixtureItem>) {
-        if (!model.loaded)
+        if (model.isLoading)
             return
 
         progressBar.visibility = View.GONE

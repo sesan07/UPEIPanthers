@@ -6,6 +6,7 @@ import com.tickaroo.tikxml.annotation.*
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Url
 import kotlin.NoSuchElementException
 
 private const val TAG = "Repository"
@@ -14,10 +15,8 @@ private const val NEWS_URL = "/landing/headlines-featured?feed=rss_2.0"
 private const val FIXTURES_URL = "/composite?print=rss"
 private const val MAX_FIXTURES = 400
 
-private fun getRosterUrl(startYear: Int): String {
-    val startYearStr = startYear.toString()
-    val endYear = startYearStr.substring(startYearStr.length - 2).toInt() + 1
-    return "/sports/mbkb/$startYear-$endYear/roster?feed=rss_2.0"
+private fun getRosterUrl(sportCode: String, season: String): String {
+    return "/sports/$sportCode/$season/roster?feed=rss_2.0"
 }
 
 
@@ -77,12 +76,44 @@ class Repository {
         lateinit var opponent: String
     }
 
+    @Xml
+    class RosterModel {
+        @Path("channel")
+        @Element(name = "item")
+        lateinit var items: List<RosterItemModel>
+
+        @Path("channel")
+        @Element(name = "image")
+        var image: RosterImageModel? = null
+    }
+
+    @Xml
+    class RosterImageModel {
+        @PropertyElement
+        lateinit var title: String
+
+        @PropertyElement
+        lateinit var url: String
+    }
+
+    @Xml
+    class RosterItemModel {
+        @PropertyElement
+        lateinit var title: String
+
+        @PropertyElement
+        lateinit var link: String
+    }
+
     interface WebService {
         @GET(NEWS_URL)
         suspend fun getNews(): NewsModel
 
         @GET(FIXTURES_URL)
         suspend fun getFixtures(): FixturesModel
+
+        @GET
+        suspend fun getRoster(@Url url: String): RosterModel
     }
 
     companion object {
@@ -111,7 +142,6 @@ class Repository {
         }
 
         suspend fun getFixtureItems(): List<FixtureItem> {
-            getRosterUrl(2019)
             val fixtureItems = mutableListOf<FixtureItem>()
 
             val webService = Retrofit.Builder()
@@ -151,6 +181,35 @@ class Repository {
             }
 
             return fixtureItems
+        }
+
+        suspend fun getRosterItems(sportCode: String, season: String): List<RosterItem> {
+            val rosterItems = mutableListOf<RosterItem>()
+
+            val webService = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(TikXmlConverterFactory.create(
+                    TikXml.Builder().exceptionOnUnreadXml(false).build()))
+                .build().create(WebService::class.java)
+
+            val rosterModel = webService.getRoster(getRosterUrl(sportCode, season))
+            val items = rosterModel.items
+            rosterModel.image?.let {
+                Log.e(TAG, it.title)
+            }
+
+
+            for (item in items) {
+                rosterItems.add(
+                    RosterItem(
+                    item.title,
+                    item.link
+                )
+                )
+                Log.e(TAG, item.link)
+            }
+
+            return rosterItems
         }
     }
 }

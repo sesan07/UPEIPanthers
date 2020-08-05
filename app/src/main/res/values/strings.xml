@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">UPEI Panthers</string>
 
-    <string name="fixtures">Fixtures</string>
     <string name="home">Home</string>
+    <string name="sports">Sports</string>
     <string name="news">News</string>
 
     <string name="home_no_fixtures">Nothing here :|</string>
     <string name="home_no_news">No news here…</string>
     <string name="no_fixtures_here">No fixtures here…</string>
+    <string name="no_roster_here">No Roster Here…</string>
     <string name="no_news_here">No news here…</string>
-    <string name="textview">TextView</string>
     <string name="fixture_image">Fixture Image</string>
     <string name="upcoming_fixture">Upcoming Fixture</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sports">Sports</string>
+    <string name="placeholder_text">Placeholder</string>
 </resources>

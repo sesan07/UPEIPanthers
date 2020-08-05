@@ -5,41 +5,64 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 private const val TAG = "NewsViewModel"
 class NewsViewModel : ViewModel() {
 
-    private var attemptedLoad = false
-    var loaded = false
+//    private var attemptedLoad = false
+    var isLoading = false
         private set
 
-    private val newsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
+    private var isNetworkAvailable = false
 
-    fun setUp() {
-        if (!attemptedLoad) {
-            loadNewsItems()
-            attemptedLoad = true
-        }
-    }
+    private val currNewsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
+
+//    fun setUp() {
+//        if (!attemptedLoad) {
+//            attemptedLoad = true
+//        }
+//    }
 
     fun getNewsItems(): LiveData<List<NewsItem>> {
-        return newsItems
+        return currNewsItems
     }
 
     private fun loadNewsItems() {
+        if (isLoading) {
+            Log.d(TAG, "News is already loading")
+            return
+        }
+
+        if (!isNetworkAvailable) {
+            Log.e(TAG, "Network is not available, can't load news")
+            return
+        }
+
         // Do an asynchronous operation to fetch newsItems.
         viewModelScope.launch {
+            isLoading = true
+
+            var items = listOf<NewsItem>()
             try {
-                val items = Repository.getNewsItems()
-                loaded = true
-                newsItems.value = items
+                items = Repository.getNewsItems()
             }
             catch (e: Exception) {
                 Log.e(TAG, "Exception while loading new Items: $e")
             }
+
+            isLoading = false
+            currNewsItems.value = items
+        }
+    }
+
+    fun onNetworkAvailabilityChanged(isAvailable: Boolean) {
+        isNetworkAvailable = isAvailable
+
+        if (currNewsItems.value.isNullOrEmpty() && isNetworkAvailable) {
+            Log.d(TAG, "Network is now available, loading news")
+            loadNewsItems()
         }
     }
 }

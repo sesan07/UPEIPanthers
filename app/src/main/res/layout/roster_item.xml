@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/roster_item_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_margin="4dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/colorCardBackground">
+
+    <TextView
+        android:id="@+id/roster_item_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/raleway_medium"
+        android:gravity="center_vertical"
+        android:text="@string/placeholder_text"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
+</androidx.cardview.widget.CardView>

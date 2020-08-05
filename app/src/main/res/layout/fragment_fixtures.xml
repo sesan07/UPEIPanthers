@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="horizontal"
     tools:context=".FixturesFragment">
 
@@ -12,6 +11,7 @@
         android:id="@+id/fixtures_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="256dp"
+        android:layout_marginTop="4dp"
         android:padding="32dp" />
 
     <TextView
@@ -28,6 +28,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fixtures_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp" />
 
 </LinearLayout>
