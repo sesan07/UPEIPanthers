@@ -117,17 +117,15 @@ class Repository {
     }
 
     companion object {
+        private val webService = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(TikXmlConverterFactory.create(
+                TikXml.Builder().exceptionOnUnreadXml(false).build()))
+            .build().create(WebService::class.java)
 
         suspend fun getNewsItems(): List<NewsItem> {
-            val newsItems = mutableListOf<NewsItem>()
-
-            val webService = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(TikXmlConverterFactory.create(
-                    TikXml.Builder().exceptionOnUnreadXml(false).build()))
-                .build().create(WebService::class.java)
-
             val items = webService.getNews().items
+            val newsItems = mutableListOf<NewsItem>()
 
             for (item in items) {
                 newsItems.add(NewsItem(
@@ -142,15 +140,8 @@ class Repository {
         }
 
         suspend fun getFixtureItems(): List<FixtureItem> {
-            val fixtureItems = mutableListOf<FixtureItem>()
-
-            val webService = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(TikXmlConverterFactory.create(
-                    TikXml.Builder().exceptionOnUnreadXml(false).build()))
-                .build().create(WebService::class.java)
-
             val items = webService.getFixtures().items
+            val fixtureItems = mutableListOf<FixtureItem>()
 
             var i = items.size - 1
             var count = 0
@@ -184,29 +175,17 @@ class Repository {
         }
 
         suspend fun getRosterItems(sportCode: String, season: String): List<RosterItem> {
+            val rosterModel = webService.getRoster(getRosterUrl(sportCode, season))
             val rosterItems = mutableListOf<RosterItem>()
 
-            val webService = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(TikXmlConverterFactory.create(
-                    TikXml.Builder().exceptionOnUnreadXml(false).build()))
-                .build().create(WebService::class.java)
-
-            val rosterModel = webService.getRoster(getRosterUrl(sportCode, season))
             val items = rosterModel.items
-            rosterModel.image?.let {
-                Log.e(TAG, it.title)
-            }
-
-
             for (item in items) {
                 rosterItems.add(
                     RosterItem(
-                    item.title,
-                    item.link
+                        item.title,
+                        item.link
+                    )
                 )
-                )
-                Log.e(TAG, item.link)
             }
 
             return rosterItems

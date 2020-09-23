@@ -25,8 +25,6 @@ class FixturesAdapter(private val boldTypeFace: Typeface, private val normalType
         return FixtureItemViewHolder(cardView)
     }
 
-
-
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: FixtureItemViewHolder, position: Int) {
         val cardView = holder.cardView
