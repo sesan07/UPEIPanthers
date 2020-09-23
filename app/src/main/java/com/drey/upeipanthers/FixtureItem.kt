@@ -9,19 +9,6 @@ import kotlin.random.Random
 private const val TAG = "FixtureItem"
 private const val TEAM_NAME = "UPEI"
 
-//enum class FixtureCategory(val text: String) {
-//    MEN_BASKETBALL("Men\'s Basketball"),
-//    MEN_SOCCER("Men\'s Soccer"),
-//    MEN_HOCKEY("Men\'s Ice Hockey"),
-//    WOMEN_BASKETBALL("Women\'s Basketball"),
-//    WOMEN_SOCCER("Women\'s Soccer"),
-//    WOMEN_HOCKEY("Women\'s Ice Hockey"),        // No boxcore link after this
-//    WOMEN_RUGBY("Women\'s Rugby"),              // No scores after this
-//    TRACK_FIELD("Track & Field"),
-//    SWIMMING("Swimming"),
-//    CROSS_COUNTRY("Cross Country")
-//}
-
 private val VICTORY_COMMENTS = listOf(
     "Too easy",
     "Huzzah!!",
@@ -43,7 +30,7 @@ class FixtureItem(
     private var opponent1: String
 ) {
 
-    var sportCategory: SportCategory
+    var sportCategory: SportCategory = SportManager.getSportCategory(categoryStr)
     var homeTeam = ""
     var awayTeam = ""
     var homeScore = ""
@@ -64,22 +51,6 @@ class FixtureItem(
     var useBoxScore = false
 
     init {
-        sportCategory = SportManager.getSportCategory(categoryStr)
-
-//        sportCategory = when (categoryStr) {
-//            "Men\'s Basketball" -> FixtureCategory.MEN_BASKETBALL
-//            "Men\'s Soccer" -> FixtureCategory.MEN_SOCCER
-//            "Men\'s Ice Hockey" -> FixtureCategory.MEN_HOCKEY
-//            "Women\'s Basketball" -> FixtureCategory.WOMEN_BASKETBALL
-//            "Women\'s Soccer" -> FixtureCategory.WOMEN_SOCCER
-//            "Women\'s Ice Hockey" -> FixtureCategory.WOMEN_HOCKEY
-//            "Women\'s Rugby" -> FixtureCategory.WOMEN_RUGBY
-//            "Track and Field" -> FixtureCategory.TRACK_FIELD
-//            "Swimming" -> FixtureCategory.SWIMMING
-//            "Cross Country" -> FixtureCategory.CROSS_COUNTRY
-//            else -> throw NoSuchElementException(categoryStr)
-//        }
-
         val isAwayGame = opponent1.startsWith("at ")
         val isExhibition = opponent1.startsWith("vs. ")
         isHomeGame = !isAwayGame

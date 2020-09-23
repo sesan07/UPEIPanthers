@@ -21,7 +21,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
         // create a new view
         val cardView = LayoutInflater.from(parent.context)
             .inflate(R.layout.news_item, parent, false) as CardView
-        // set the view's size, margins, paddings and layout parameters
         return NewsItemViewHolder(cardView)
     }
 
@@ -29,8 +28,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         val cardView = holder.cardView
         val imageView = cardView.findViewById<ImageView>(R.id.news_image_view)
         val titleTextView = cardView.findViewById<TextView>(R.id.title_text_view)
@@ -52,7 +49,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>(){
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
         return newsItems.size
     }

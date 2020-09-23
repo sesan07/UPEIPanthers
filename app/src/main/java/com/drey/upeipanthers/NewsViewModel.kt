@@ -10,20 +10,12 @@ import java.lang.Exception
 
 private const val TAG = "NewsViewModel"
 class NewsViewModel : ViewModel() {
-
-//    private var attemptedLoad = false
     var isLoading = false
         private set
 
     private var isNetworkAvailable = false
 
     private val currNewsItems: MutableLiveData<List<NewsItem>> = MutableLiveData(listOf())
-
-//    fun setUp() {
-//        if (!attemptedLoad) {
-//            attemptedLoad = true
-//        }
-//    }
 
     fun getNewsItems(): LiveData<List<NewsItem>> {
         return currNewsItems

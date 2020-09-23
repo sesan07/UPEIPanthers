@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         sportsViewModel.setUp()
         fixturesViewModel.setUp()
         rostersViewModel.setUp()
-//        newsViewModel.setUp()
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return

@@ -48,12 +48,9 @@ class SportsFragment : Fragment() {
             sportsViewModel.onCategoryChanged(selectedCategory)
 
             categoriesAdapter.setCurrCategory(selectedCategory)
-//            fixturesViewModel.categoryChanged(selectedCategory)
             categoriesListView.collapseGroup(groupPosition)
             false
         }
-
-
 
         sportsViewModel.getCurrCategory().observe(viewLifecycleOwner, Observer { category ->
             fixturesViewModel.onCategoryChanged(category)

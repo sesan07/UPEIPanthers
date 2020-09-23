@@ -32,7 +32,6 @@ class FixturesViewModel : ViewModel() {
                 categoryFixtureItems[category] = listOf()
             }
 
-//            loadFixtureItems()
             firstSetup = false
         }
     }

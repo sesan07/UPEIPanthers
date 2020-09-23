@@ -22,7 +22,6 @@ class FixturesAdapter(private val boldTypeFace: Typeface, private val normalType
         // create a new view
         val cardView = LayoutInflater.from(parent.context)
             .inflate(R.layout.fixture_item, parent, false) as CardView
-        // set the view's size, margins, paddings and layout parameters
         return FixtureItemViewHolder(cardView)
     }
 
@@ -30,8 +29,6 @@ class FixturesAdapter(private val boldTypeFace: Typeface, private val normalType
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: FixtureItemViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         val cardView = holder.cardView
         val fixtureItem = fixtureItems[position]
 
@@ -97,7 +94,6 @@ class FixturesAdapter(private val boldTypeFace: Typeface, private val normalType
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
         return fixtureItems.size
     }
