@@ -62,6 +62,17 @@ class FixturesFragment : Fragment() {
             emptyTextView.visibility = View.GONE
 
         fixturesAdapter.updateFixtureItems(fixtureItems)
-        recyclerView.smoothScrollToPosition(0)
+
+        // Scroll to closest fixture (first fixture that's not upcoming)
+        var i = 0
+        var closestIndex = 0
+        while (i < fixtureItems.size){
+            if (!fixtureItems[i].isUpcoming) {
+                closestIndex = i;
+                break
+            }
+            i++
+        }
+        recyclerView.smoothScrollToPosition(closestIndex)
     }
 }
