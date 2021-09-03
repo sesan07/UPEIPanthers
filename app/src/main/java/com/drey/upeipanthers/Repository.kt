@@ -42,7 +42,7 @@ class Repository {
 
         @Path("enclosure")
         @Attribute(name = "url")
-        lateinit var url: String
+        var url: String? = null
     }
 
     @Xml
@@ -128,11 +128,14 @@ class Repository {
             val newsItems = mutableListOf<NewsItem>()
 
             for (item in items) {
+                if (item.url === null) {
+                    continue
+                }
                 newsItems.add(NewsItem(
                     item.title,
                     item.link,
                     item.description,
-                    item.url.substringBefore("?")
+                    item.url!!.substringBefore("?").replace("http://", "https://")
                 ))
             }
 
